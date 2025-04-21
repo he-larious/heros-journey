@@ -1,0 +1,113 @@
+.circle-container {
+    position: relative;
+    width: 400px;
+    height: 400px;
+    margin: 0 auto;
+    margin-top: 4rem;
+    border-radius: 50%;
+}
+
+.circle-outline {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 360px;
+    height: 360px;
+    transform: translate(-50%, -50%);
+    border: 2px solid #555;
+    border-radius: 50%;
+    z-index: 0;
+}
+
+.circle-chord {
+    position: absolute;
+    top: 39%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 88%;
+    height: 2px;
+    background-color: #333;
+    z-index: 0;
+}
+
+.center-label {
+    position: absolute;
+    width: 100%;
+    text-align: center;
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+
+.center-label.top {
+    top: 26%;
+    transform: translateY(-50%);
+}
+
+.center-label.bottom {
+    bottom: 38%;
+    transform: translateY(50%);
+}
+
+.circle-item {
+    width: 50px;
+    height: 50px;
+    background-color: #fff;
+    border: 2px solid #000;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 50px;
+    font-weight: bold;
+    color: black;
+    text-decoration: none;
+    z-index: 2;
+}
+
+.stage-wrapper {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(calc((var(--i) * 30deg) - 150deg)) translate(180px) rotate(calc(150deg - (var(--i) * 30deg)));
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1;
+}
+
+.stage-label {
+    position: absolute;
+    font-size: 0.75rem;
+    padding: 2px 6px;
+    background-color: #f0f0f0;
+    border: 1px solid #999;
+    border-radius: 4px;
+    white-space: nowrap;
+    z-index: 2;
+}
+
+/* Top center (Stage 2) */
+.label-2 {
+    top: -35px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+/* Bottom center (Stage 8) */
+.label-8 {
+    bottom: -35px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+/* Right side (Stages 3–7) */
+.label-3  { top: 9%; right: -10%; }
+.label-4  { top: 25%; right: -27%; }
+.label-5  { top: 47%; right: -39%; }
+.label-6  { top: 70%; right: -36%; }
+.label-7  { top: 87%; right: -23%; }
+
+/* Left side (Stages 9, 10, 11, 12, 1) */
+.label-9  { top: 87%; left: -3%; }
+.label-10 { top: 70%; left: -22%; }
+.label-11 { top: 47%; left: -25%; }
+.label-12 { top: 25%; left: -27%; }
+.label-1  { top: 9%; left: -10%; }

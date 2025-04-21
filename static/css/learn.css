@@ -1,0 +1,29 @@
+.learn-container {
+    text-align: center;
+    margin-top: 4rem;
+}
+
+.movie-buttons {
+    margin-top: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    align-items: center;
+}
+
+.movie-btn {
+    padding: 1rem 2rem;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    text-decoration: none;
+    font-weight: bold;
+    border-radius: 8px;
+    width: 280px;
+    text-align: center;
+    transition: background-color 0.3s;
+}
+
+.movie-btn:hover {
+    background-color: #0056b3;
+}

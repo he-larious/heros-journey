@@ -45,6 +45,15 @@ def learn_stage(movie_key, stage_num):
         stage=stage
     )
 
+@app.route('/diagram/<movie_key>')
+def learn_diagram(movie_key):
+    with open('data/stages.json') as f:
+        stages = json.load(f)
+
+    stage_names = {int(k): v["name"] for k, v in stages.items()}
+
+    return render_template('diagram.html', movie_key=movie_key, stage_names=stage_names)
+
 @app.route('/quiz')
 def quiz():
     return render_template('quiz.html')

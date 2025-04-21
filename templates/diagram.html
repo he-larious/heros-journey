@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/diagram.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="circle-container">
+    <div class="circle-outline"></div> <!-- <-- background circle -->
+    <div class="circle-chord"></div>
+
+    {% for i in range(1, 13) %}
+    <div class="stage-wrapper" style="--i: {{ i }};">
+        <a href="{{ url_for('learn_stage', movie_key=movie_key, stage_num=i) }}" class="circle-item">{{ i }}</a>
+    </div>
+    <div class="stage-label label-{{ i }}">{{ stage_names[i] }}</div>
+    {% endfor %}
+
+    <div class="center-label top">Ordinary World</div>
+    <div class="center-label bottom">Special World</div>
+</div>
+{% endblock %}
