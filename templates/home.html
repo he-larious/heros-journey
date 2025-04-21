@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="home-container">
+    <h1>Explore the Hero's Journey!</h1>
+    <p>Discover the path every hero takes — from the ordinary world to legendary transformation.</p>
+    
+    <div class="button-group">
+        <a class="btn" href="{{ url_for('learn') }}">Learn</a>
+        <a class="btn" href="{{ url_for('quiz') }}">Quiz</a>
+    </div>
+</div>
+{% endblock %}
