@@ -1,0 +1,78 @@
+{
+    "title": "The Hunger Games",
+    "stages": {
+      "1": {
+        "media_type": "image",
+        "media_url": "https://media.oregonlive.com/ent_impact_tvfilm/photo/katnissjpg-42f9b8998fc9ac15.jpg",
+        "caption": "Katniss lives in District 12, hunting illegally to feed her family and surviving under the harsh rule of the Capitol."
+      },
+      "2": {
+        "media_type": "video",
+        "video_id": "e3PJ3Du_zDc",
+        "start": 44,
+        "end": 94,
+        "caption": "Prim is selected at the Reaping and Katniss volunteers in her place."
+      },
+      "3": {
+        "media_type": "image",
+        "media_url": "https://www.centives.net/S/wp-content/uploads/2012/09/091912_1043_HowMuchDoes1.jpg",
+        "caption": "Katniss is overwhelmed by the Capitol's extravagance and questions her ability to survive the Games."
+      },
+      "4": {
+        "media_type": "video",
+        "video_id": "gwMH4g-WLf4",
+        "start": 242,
+        "end": 286,
+        "caption": "Haymitch begins to guide Katniss, offering strategic advice for survival and winning favor."
+      },
+      "5": {
+        "media_type": "video",
+        "video_id": "C7EIW_C0-9c",
+        "start": 101,
+        "end": 139,
+        "caption": "Katniss enters the arena. There's no turning back."
+      },
+      "6": {
+        "media_type": "image",
+        "media_url": "https://pa1.aminoapps.com/6180/5499e95f0ca2b546887c3670677e9662a14752be_hq.gif",
+        "caption": "Katniss has a confrontation with the Careers and starts an alliance with Rue."
+      },
+      "7": {
+        "media_type": "video",
+        "video_id": "oFbn7vq9rxY",
+        "start": 262,
+        "end": 296,
+        "caption": "Rue is killed and Katniss stages a symbolic burial, defying the Capitol."
+      },
+      "8": {
+        "media_type": "image",
+        "media_url": "https://s3.amazonaws.com/s3.timetoast.com/public/uploads/photo/6801172/image/2e57a3ac2f0eeb3c4a92bedd19540a62?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAJB6ZCNNAN7BE7WDQ%2F20250414%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20250414T211820Z&X-Amz-Expires=604800&X-Amz-SignedHeaders=host&X-Amz-Signature=dd796fd56de34c3ddb07217f39acffbf44b654e3dfe4c8b32f566da46c53f2af",
+        "caption": "Tracker jackers, evil Careers, poisonous berries, fire — you name it, and the arena has it, ready to push Katniss to the limit."
+      },
+      "9": {
+        "media_type": "image",
+        "media_url": "https://i.ytimg.com/vi/8IUYK6Vpr2Y/maxresdefault.jpg",
+        "caption": "The Head Gamemaker announces that two tributes can win the Games together if they're from the same district."
+      },
+      "10": {
+        "media_type": "video",
+        "video_id": "ld7GYGE88F0",
+        "start": 18,
+        "end": 43,
+        "caption": "The Capitol revokes the rule change, forcing Katniss and Peeta to kill each other."
+      },
+      "11": {
+        "media_type": "video",
+        "video_id": "ld7GYGE88F0",
+        "start": 115,
+        "end": 136,
+        "caption": "Katniss and Peeta stage a double suicide with poisonous nightlock berries, forcing the Capitol to announce them as co-victors."
+      },
+      "12": {
+        "media_type": "image",
+        "media_url": "https://static1.srcdn.com/wordpress/wp-content/uploads/2024/06/katniss-and-peeta-return-to-district-12-scene-hunger-games.jpg",
+        "caption": "Katniss returns to District 12, forever changed, carrying the spark of revolution."
+      }
+    }
+}
+  

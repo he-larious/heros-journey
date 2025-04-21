@@ -1,0 +1,50 @@
+{
+    "1": {
+      "name": "The Ordinary World",
+      "description": "In which we meet our Hero."
+    },
+    "2": {
+      "name": "The Call to Adventure",
+      "description": "In which an adventure starts."
+    },
+    "3": {
+      "name": "Refusal of the Call",
+      "description": "In which the Hero digs in their feet."
+    },
+    "4": {
+      "name": "Meeting the Mentor",
+      "description": "In which the Hero acquires a personal trainer."
+    },
+    "5": {
+      "name": "Crossing the Threshold",
+      "description": "In which the Hero enters the other world in earnest."
+    },
+    "6": {
+      "name": "Tests, Allies, and Enemies",
+      "description": "In which the Hero faces new challenges and gets a squad."
+    },
+    "7": {
+      "name": "Approach to the Inmost Cave",
+      "description": "In which the Hero makes final preparations before confronting their greatest challenge."
+    },
+    "8": {
+      "name": "The Ordeal",
+      "description": "In which the Hero faces their biggest test of all thus far."
+    },
+    "9": {
+      "name": "Reward",
+      "description": "In which the Hero sees light at the end of the tunnel."
+    },
+    "10": {
+      "name": "The Road Back",
+      "description": "In which the light at the end of the tunnel might be a little further than the Hero thought."
+    },
+    "11": {
+      "name": "Resurrection",
+      "description": "In which the last test is met."
+    },
+    "12": {
+      "name": "Return with the Elixir",
+      "description": "In which our Hero has a triumphant homecoming."
+    }
+  }  
