@@ -1,5 +1,9 @@
 {% extends "base.html" %}
 
+{% block extra_css %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/learn_stage.css') }}">
+{% endblock %}
+
 {% block content %}
 <div class="stage-container">
     <h2>Stage {{ stage_num }}: {{ stage_name }}</h2>
@@ -22,13 +26,6 @@
 
     <p class="caption">{{ stage.caption }}</p>
 
-    <div class="nav-buttons">
-        {% if stage_num > 1 %}
-            <a href="{{ url_for('learn_stage', movie_key=movie_key, stage_num=stage_num - 1) }}">← Previous</a>
-        {% endif %}
-        {% if stage_num < 12 %}
-            <a href="{{ url_for('learn_stage', movie_key=movie_key, stage_num=stage_num + 1) }}">Next →</a>
-        {% endif %}
-    </div>
+    <a href="{{ url_for('learn_diagram', movie_key=movie_key) }}" class="back-to-diagram">Back to Diagram</a>
 </div>
 {% endblock %}

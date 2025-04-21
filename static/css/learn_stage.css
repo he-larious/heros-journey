@@ -1,0 +1,40 @@
+.stage-container {
+    text-align: center;
+}
+
+.stage-container h2 {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+}
+
+.stage-container p {
+    font-size: 1rem;
+    line-height: 1.5;
+    margin: 1rem 0;
+}
+
+.media {
+    margin: 2rem 0;
+}
+
+.caption {
+    font-size: 1rem;
+    color: #444;
+    margin-bottom: 2rem;
+}
+
+.back-to-diagram {
+    display: inline-block;
+    margin-bottom: 1.5rem;
+    background-color: #ccc;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    text-decoration: none;
+    color: #000;
+    font-weight: bold;
+    transition: background-color 0.2s;
+}
+
+.back-to-diagram:hover {
+    background-color: #aaa;
+}

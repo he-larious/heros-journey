@@ -11,7 +11,11 @@
 
     {% for i in range(1, 13) %}
     <div class="stage-wrapper" style="--i: {{ i }};">
-        <a href="{{ url_for('learn_stage', movie_key=movie_key, stage_num=i) }}" class="circle-item">{{ i }}</a>
+        {% if i <= unlocked_up_to %}
+            <a href="{{ url_for('learn_stage', movie_key=movie_key, stage_num=i) }}" class="circle-item">{{ i }}</a>
+        {% else %}
+            <div class="circle-item disabled">{{ i }}</div>
+        {% endif %}
     </div>
     <div class="stage-label label-{{ i }}">{{ stage_names[i] }}</div>
     {% endfor %}

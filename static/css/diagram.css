@@ -62,6 +62,14 @@
     z-index: 2;
 }
 
+.circle-item.disabled {
+    background-color: #ddd;
+    color: #999;
+    border: 2px dashed #aaa;
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
 .stage-wrapper {
     position: absolute;
     top: 50%;

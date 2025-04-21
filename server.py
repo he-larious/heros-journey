@@ -1,20 +1,29 @@
 import os
-from flask import Flask, abort, json, render_template
+from flask import Flask, abort, json, redirect, render_template, session, url_for
 
 app = Flask(__name__)
+app.secret_key = 'your-secret-key'
 
+
+with open('data/stages.json') as f:
+    all_stage_data = json.load(f)
 
 def load_movie_data(movie_key):
+    """Load JSON data for a specific movie."""
     filepath = f'data/{movie_key}.json'
+
     if not os.path.exists(filepath):
         return None
     with open(filepath) as f:
         return json.load(f)
 
-def load_stage_data(stage_num):
-    with open('data/stages.json') as f:
-        stages = json.load(f)
-    return stages.get(str(stage_num))
+def get_stage_info(stage_num):
+    """Return stage name and description for a given stage number."""
+    return all_stage_data.get(str(stage_num))
+
+def get_stage_names():
+    """Return dictionary of stage numbers → names (for diagram)"""
+    return {int(k): v["name"] for k, v in all_stage_data.items()}
 
 
 @app.route('/')
@@ -28,10 +37,17 @@ def learn():
 @app.route('/learn/<movie_key>/<int:stage_num>')
 def learn_stage(movie_key, stage_num):
     movie = load_movie_data(movie_key)
-    stage_info = load_stage_data(stage_num)
+    stage_info = get_stage_info(stage_num)
 
     if not movie or str(stage_num) not in movie["stages"] or not stage_info:
         abort(404)
+
+    # Initialize progress for this movie
+    if 'learn_progress' not in session:
+        session['learn_progress'] = {}
+
+    session['learn_progress'][movie_key] = stage_num + 1
+    session.modified = True
 
     stage = movie["stages"][str(stage_num)]
 
@@ -47,12 +63,16 @@ def learn_stage(movie_key, stage_num):
 
 @app.route('/diagram/<movie_key>')
 def learn_diagram(movie_key):
-    with open('data/stages.json') as f:
-        stages = json.load(f)
+    progress = session.get('learn_progress', {}).get(movie_key, 1)
+    stage_names = get_stage_names()
 
-    stage_names = {int(k): v["name"] for k, v in stages.items()}
+    return render_template('diagram.html', movie_key=movie_key, stage_names=stage_names, unlocked_up_to=progress)
 
-    return render_template('diagram.html', movie_key=movie_key, stage_names=stage_names)
+# NOTE: Dev only path to rest progress tracking
+@app.route('/reset_progress')
+def reset_progress():
+    session.pop('learn_progress', None)
+    return redirect(url_for('learn'))
 
 @app.route('/quiz')
 def quiz():
