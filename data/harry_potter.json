@@ -1,0 +1,76 @@
+{
+    "title": "Harry Potter and the Sorcerer's Stone",
+    "stages": {
+      "1": {
+        "media_type": "image",
+        "media_url": "https://static1.colliderimages.com/wordpress/wp-content/uploads/2024/11/dudley-dursley-harry-potter-1.jpg",
+        "caption": "Harry lives a lonely life with the Dursleys in a cupboard under the stairs, unaware of his magical heritage."
+      },
+      "2": {
+        "media_type": "image",
+        "media_url": "https://i.pinimg.com/736x/88/0c/7e/880c7ed9f3369a3fa31e40f77f5ad6fd.jpg",
+        "caption": "Mysterious letters begin arriving, inviting Harry to attend Hogwarts School of Witchcraft and Wizardry."
+      },
+      "3": {
+        "media_type": "video",
+        "video_id": "K3IE5DDewDE",
+        "start": 145,
+        "end": 193,
+        "caption": "The Dursleys try everything to stop Harry from receiving his letter — even taking him to a remote island."
+      },
+      "4": {
+        "media_type": "video",
+        "video_id": "z9GwIeh5FIY",
+        "start": 93,
+        "end": 118,
+        "caption": "Hagrid bursts in, tells Harry he's a wizard, and gives him his first glimpse into the magical world."
+      },
+      "5": {
+        "media_type": "video",
+        "video_id": "x4hyAAV1kwQ",
+        "start": 162,
+        "end": 178,
+        "caption": "Harry boards the Hogwarts Express and steps into a world of magic unlike anything he's ever known."
+      },
+      "6": {
+        "media_type": "image",
+        "media_url": "https://allears.net/wp-content/uploads/2021/06/sorcerers-stone-gif.gif",
+        "caption": "At Hogwarts, Harry becomes friends with Ron and Hermione, faces challenges like flying lessons and trolls, and meets rivals like Draco Malfoy and Snape."
+      },
+      "7": {
+        "media_type": "image",
+        "media_url": "https://images.gr-assets.com/hostedimages/1579679344ra/28820922.gif",
+        "caption": "Harry, Ron, and Hermione discover the trapdoor protecting the Sorcerer's Stone and decide to go after it themselves."
+      },
+      "8": {
+        "media_type": "image",
+        "media_url": "https://i.pinimg.com/736x/85/9a/aa/859aaa5ecc699210749a649f5af362a3.jpg",
+        "caption": "They face magical trials: a deadly plant, flying keys, a life-sized chess game, and finally Harry confronts what he believes to be Snape, but turns out to be Voldemort."
+      },
+      "9": {
+        "media_type": "video",
+        "video_id": "iSItf2y7hgs",
+        "start": 140,
+        "end": 158,
+        "caption": "Harry finds a magical mirror that reveals his true desire - to stop the villain from stealing the Sorcerer's Stone. Because he wants the Stone to protect others, not for selfish reasons, the magic hides it in his pocket and keeps it safe from the enemy."
+      },
+      "10": {
+        "media_type": "video",
+        "video_id": "iSItf2y7hgs",
+        "start": 341,
+        "end": 380,
+        "caption": "Harry passes out after facing Voldemort and wakes in the hospital wing, unsure of what happened after the final confrontation."
+      },
+      "11": {
+        "media_type": "image",
+        "media_url": "https://images.squarespace-cdn.com/content/v1/5a7dcf69d7bdce185884a6b5/1540231216567-LL2UJPGQBXP3AJZKKYLU/harry-potter-and-the-sorcerers-stone-page-12-of-12.jpg",
+        "caption": "Dumbledore explains that Harry survived because his mother died protecting him, casting a powerful magical shield of love. This protection saved him from Voldemort's curse and reveals that Harry is magically linked to the dark wizard."
+      },
+      "12": {
+        "media_type": "image",
+        "media_url": "https://media1.giphy.com/media/hujejOtss7zG0/giphy.gif?cid=6c09b952w6tw4yd40z72417ez636pi95acm8vqc10ydhtoah&ep=v1_gifs_search&rid=giphy.gif&ct=g",
+        "caption": "Harry returns to the Muggle world for the summer, no longer powerless or unloved, but a boy who knows who he is and where he belongs."
+      }
+    }
+}
+  
