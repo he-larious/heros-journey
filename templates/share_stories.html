@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/quiz.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="quiz-container">
+    <h1>Share Your Stories</h1>
+    
+    <div class="stories-container">
+        {% if stories %}
+            {% for story in stories %}
+            <div class="story-card">
+                <h3>{{ story.stage }}</h3>
+                <p class="story-prompt"><strong>Prompt:</strong> {{ story.prompt }}</p>
+                <div class="story-content">
+                    {{ story.story|replace('\n', '<br>')|safe }}
+                </div>
+                <button class="copy-button" onclick="copyToClipboard('{{ story.story|replace('\n', '\\n')|replace("'", "\\'") }}')">
+                    Copy Story
+                </button>
+            </div>
+            {% endfor %}
+        {% else %}
+            <p class="no-stories">You haven't written any stories yet. Complete the quiz to create your hero's journey!</p>
+        {% endif %}
+    </div>
+
+    <div class="action-buttons">
+        <a href="{{ url_for('quiz_results') }}" class="back-button">Back to Results</a>
+        <a href="{{ url_for('quiz') }}" class="retry-button">Try Again</a>
+    </div>
+</div>
+
+<script>
+function copyToClipboard(text) {
+    navigator.clipboard.writeText(text).then(function() {
+        alert('Story copied to clipboard!');
+    }).catch(function(err) {
+        console.error('Could not copy text: ', err);
+    });
+}
+</script>
+{% endblock %} 

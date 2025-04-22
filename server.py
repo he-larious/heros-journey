@@ -1,13 +1,15 @@
-import os
-from flask import Flask, abort, json, redirect, render_template, request, session, url_for
-import json
+mport os
+from flask import Flask, abort, json, redirect, render_template, session, url_for, request, jsonify
 
 app = Flask(__name__)
 app.secret_key = 'your-secret-key'
 
-
+# Load all JSON data
 with open('data/stages.json') as f:
     all_stage_data = json.load(f)
+
+with open('data/quiz.json') as f:
+    quiz_data = json.load(f)
 
 def load_movie_data(movie_key):
     """Load JSON data for a specific movie."""
@@ -25,7 +27,6 @@ def get_stage_info(stage_num):
 def get_stage_names():
     """Return dictionary of stage numbers → names (for diagram)"""
     return {int(k): v["name"] for k, v in all_stage_data.items()}
-
 
 @app.route('/')
 def home():
@@ -66,59 +67,150 @@ def learn_stage(movie_key, stage_num):
 def learn_diagram(movie_key):
     progress = session.get('learn_progress', {}).get(movie_key, 1)
     stage_names = get_stage_names()
-
     return render_template('diagram.html', movie_key=movie_key, stage_names=stage_names, unlocked_up_to=progress)
 
-# NOTE: Dev only path to rest progress tracking
+# Quiz routes
+@app.route('/quiz')
+def quiz():
+    # Reset quiz progress when starting new quiz
+    session['quiz_progress'] = {
+        'current_question': 1,
+        'correct_answers': 0,
+        'answers': {},
+        'stories': {}  # Add stories tracking
+    }
+    return render_template('quiz.html')
+
+@app.route('/quiz/<int:question_num>')
+def quiz_question(question_num):
+    if 'quiz_progress' not in session:
+        return redirect(url_for('quiz'))
+    
+    if question_num < 1 or question_num > len(quiz_data['questions']):
+        abort(404)
+    
+    question = quiz_data['questions'][question_num - 1]
+    return render_template('quiz_question.html', 
+                         question=question,
+                         total_questions=len(quiz_data['questions']),
+                         progress=session['quiz_progress'])
+
+@app.route('/quiz/submit', methods=['POST'])
+def submit_answer():
+    if 'quiz_progress' not in session:
+        return redirect(url_for('quiz'))
+    
+    data = request.get_json()
+    question_num = data.get('question_num')
+    answer = data.get('answer')
+    
+    if not question_num or answer is None:
+        abort(400)
+    
+    question = quiz_data['questions'][question_num - 1]
+    is_correct = answer == question['correct_answer']
+    
+    # Update session
+    if is_correct:
+        session['quiz_progress']['correct_answers'] += 1
+    session['quiz_progress']['answers'][str(question['id'])] = {
+        'selected': answer,
+        'correct': is_correct
+    }
+    session['quiz_progress']['current_question'] = question_num + 1
+    session.modified = True
+    
+    return jsonify({
+        'correct': is_correct,
+        'explanation': question['explanation'],
+        'next_question': question_num + 1 if question_num < len(quiz_data['questions']) else None
+    })
+
+@app.route('/quiz/save_story', methods=['POST'])
+def save_story():
+    if 'quiz_progress' not in session:
+        return redirect(url_for('quiz'))
+    
+    data = request.get_json()
+    question_num = data.get('question_num')
+    story = data.get('story')
+    
+    if not question_num or not story:
+        abort(400)
+    
+    # Initialize stories dict if it doesn't exist
+    if 'stories' not in session['quiz_progress']:
+        session['quiz_progress']['stories'] = {}
+    
+    # Save the story
+    session['quiz_progress']['stories'][str(question_num)] = story
+    session.modified = True
+    
+    return jsonify({'success': True})
+
+@app.route('/quiz/results')
+def quiz_results():
+    if 'quiz_progress' not in session:
+        return redirect(url_for('quiz'))
+    
+    progress = session['quiz_progress']
+    total_questions = len(quiz_data['questions'])
+    score = (progress['correct_answers'] / total_questions) * 100
+    
+    # Get all questions and their corresponding answers and stories
+    questions_with_results = []
+    for question in quiz_data['questions']:
+        q_id = str(question['id'])
+        answer_data = progress['answers'].get(q_id, {})
+        story = progress.get('stories', {}).get(q_id, '')
+        
+        questions_with_results.append({
+            'question': question,
+            'answer': answer_data,
+            'story': story
+        })
+    
+    return render_template('quiz_results.html',
+                         score=score,
+                         correct_answers=progress['correct_answers'],
+                         total_questions=total_questions,
+                         questions_with_results=questions_with_results)
+
+@app.route('/quiz/share')
+def share_stories():
+    if 'quiz_progress' not in session:
+        return redirect(url_for('quiz'))
+    
+    progress = session['quiz_progress']
+    stories = progress.get('stories', {})
+    questions = quiz_data['questions']
+    
+    # Combine stories with their corresponding questions
+    stories_with_questions = []
+    for q_id, story in stories.items():
+        question = next((q for q in questions if str(q['id']) == q_id), None)
+        if question:
+            stories_with_questions.append({
+                'stage': question['stage'],
+                'prompt': question['story_prompt'],
+                'story': story
+            })
+    
+    return render_template('share_stories.html',
+                         stories=stories_with_questions)
+
+@app.route('/quiz/stories')
+def view_stories():
+    # In a real application, this would fetch stories from a database
+    # For now, we'll just show a message
+    return render_template('view_stories.html')
+
+# NOTE: Dev only path to reset progress tracking
 @app.route('/reset_progress')
 def reset_progress():
     session.pop('learn_progress', None)
+    session.pop('quiz_progress', None)
     return redirect(url_for('learn'))
 
-
-def load_quiz_data():
-    path = os.path.join("data", "quiz_questions.json")
-    with open(path) as f:
-        return json.load(f)
-
-@app.route("/quiz")
-def quiz():
-    return "<h1>Hero's Journey</h1><p><a href='/quiz/1'>Start Quiz</a></p>"
-
-@app.route("/quiz/<int:stage_number>", methods=["GET", "POST"])
-def quiz_stage(stage_number):
-    quiz_data_list = load_quiz_data()
-    if stage_number > len(quiz_data_list):
-        return redirect(url_for("quiz_result"))
-
-    quiz_data = quiz_data_list[stage_number - 1]
-    selected = None
-    feedback = None
-    correct = False
-    show_next = False
-
-    if request.method == "POST":
-        selected = request.form.get("answer")
-        if selected == quiz_data["answer"]:
-            feedback = "✅ Correct!"
-            correct = True
-            show_next = True
-        else:
-            feedback = "❌ Oops! Try again."
-
-    return render_template(
-        "quiz.html",
-        quiz_data=quiz_data,
-        selected=selected,
-        feedback=feedback,
-        correct=correct,
-        show_next=show_next,
-        next_stage=stage_number + 1
-    )
-
-@app.route("/quiz_result")
-def quiz_result():
-    return "<h2>🎉 Quiz complete! You've finished all the stages.</h2>"
-
-if __name__ == "__main__":
+if __name__ == '__main__':
     app.run(debug=True, port=5001)
