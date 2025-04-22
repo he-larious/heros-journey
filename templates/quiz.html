@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ quiz_data.title }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/learn_stage.css') }}">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container mt-5">
+    <h2 class="mb-4">{{ quiz_data.number }}. {{ quiz_data.title }}</h2>
+    <p class="lead">{{ quiz_data.instruction }}</p>
+    <form method="POST">
+        {% for option in quiz_data.options %}
+        <button type="submit" name="answer" value="{{ option }}"
+                class="btn btn-outline-primary btn-block text-left mb-2 {{ 'active' if selected == option else '' }}">
+            {{ option }}
+        </button>
+        {% endfor %}
+    </form>
+    {% if feedback %}
+        <div class="alert {{ 'alert-success' if correct else 'alert-danger' }} mt-4" role="alert">
+            {{ feedback }}
+        </div>
+    {% endif %}
+    {% if show_next %}
+        <form method="GET" action="{{ url_for('quiz_stage', stage_number=next_stage) }}">
+            <button type="submit" class="btn btn-success mt-3">Next</button>
+        </form>
+    {% endif %}
+</div>
+</body>
+</html>

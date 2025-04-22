@@ -1,5 +1,6 @@
 import os
 from flask import Flask, abort, json, redirect, render_template, session, url_for
+import json
 
 app = Flask(__name__)
 app.secret_key = 'your-secret-key'
@@ -74,9 +75,50 @@ def reset_progress():
     session.pop('learn_progress', None)
     return redirect(url_for('learn'))
 
-@app.route('/quiz')
-def quiz():
-    return render_template('quiz.html')
 
-if __name__ == '__main__':
-    app.run(debug=True, port=5001)
+def load_quiz_data():
+    path = os.path.join("data", "quiz_questions.json")
+    with open(path) as f:
+        return json.load(f)
+
+@app.route("/")
+def home():
+    return "<h1>Hero's Journey</h1><p><a href='/quiz/1'>Start Quiz</a></p>"
+
+@app.route("/quiz/<int:stage_number>", methods=["GET", "POST"])
+def quiz_stage(stage_number):
+    quiz_data_list = load_quiz_data()
+    if stage_number > len(quiz_data_list):
+        return redirect(url_for("quiz_result"))
+
+    quiz_data = quiz_data_list[stage_number - 1]
+    selected = None
+    feedback = None
+    correct = False
+    show_next = False
+
+    if request.method == "POST":
+        selected = request.form.get("answer")
+        if selected == quiz_data["answer"]:
+            feedback = "✅ Correct!"
+            correct = True
+            show_next = True
+        else:
+            feedback = "❌ Oops! Try again."
+
+    return render_template(
+        "quiz.html",
+        quiz_data=quiz_data,
+        selected=selected,
+        feedback=feedback,
+        correct=correct,
+        show_next=show_next,
+        next_stage=stage_number + 1
+    )
+
+@app.route("/quiz_result")
+def quiz_result():
+    return "<h2>🎉 Quiz complete! You've finished all the stages.</h2>"
+
+if __name__ == "__main__":
+    app.run(debug=True)
