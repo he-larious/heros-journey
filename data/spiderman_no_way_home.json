@@ -1,0 +1,76 @@
+{
+    "title": "Spider-Man: No Way Home",
+    "stages": {
+      "1": {
+        "media_type": "image",
+        "media_url": "https://static1.srcdn.com/wordpress/wp-content/uploads/2022/09/Spider-Man-No-Way-Home-Peter-Parker-School-First-Day.jpg",
+        "caption": "Peter's life is thrown into chaos after the world learns he is Spider-Man, and his dreams for college and normalcy begin slipping away."
+      },
+      "2": {
+        "media_type": "image",
+        "media_url": "https://64.media.tumblr.com/edccec4c1df676a5c16e0d21a2a62f18/889e9f8d144bebfe-92/s640x960/51f0ff867696d7f65de274330ce79fd463345643.gifv",
+        "caption": "Peter asks Doctor Strange to cast a spell to make everyone forget he's Spider-Man so he can get his life back."
+      },
+      "3": {
+        "media_type": "video",
+        "video_id": "1HIk9mrBB7o",
+        "start": 275,
+        "end": 335,
+        "caption": "Peter keeps interrupting the spell to protect the people he loves, causing it to go wrong and open the multiverse."
+      },
+      "4": {
+        "media_type": "image",
+        "media_url": "https://64.media.tumblr.com/7d769531c336bcd67a00916c87b7a70e/ef30b846bfaae180-ef/s540x810/f9ef6b02381f065f724fb293a3f04aa2144761dd.gif",
+        "caption": "Doctor Strange guides Peter at first but ultimately challenges his thinking when Peter decides to help the villains instead of sending them back."
+      },
+      "5": {
+        "media_type": "video",
+        "video_id": "9OykfhQyhNU",
+        "start": 15,
+        "end": 31,
+        "caption": "Peter steals the spell box from Doctor Strange and chooses to cure the villains, fully committing to this new path."
+      },
+      "6": {
+        "media_type": "image",
+        "media_url": "https://img.buzzfeed.com/buzzfeed-static/static/2021-12/18/0/asset/b4ee7bf2d2d0/anigif_sub-buzz-2832-1639787130-8.gif",
+        "caption": "Peter works with MJ and Ned to cure the villains, but faces betrayal when Green Goblin sabotages everything."
+      },
+      "7": {
+        "media_type": "video",
+        "video_id": "yaVK5GSuih8",
+        "start": 202,
+        "end": 270,
+        "caption": "Peter tries to finish what he started but is devastated when Aunt May is killed in the fight, leaving him lost in grief and guilt."
+      },
+      "8": {
+        "media_type": "video",
+        "video_id": "a6y0b_G5OZQ",
+        "start": 241,
+        "end": 273,
+        "caption": "Consumed by rage, Peter nearly kills the Green Goblin but is stopped by Tobey's Spider-Man, forcing him to confront who he is becoming."
+      },
+      "9": {
+        "media_type": "image",
+        "media_url": "https://64.media.tumblr.com/1413f679674fd26f029c5faabb133654/7c2cb772cac5db45-50/s540x810/05e5359af2f416340a83337c2364e88c29fba71a.gif",
+        "caption": "Peter finishes curing the villains with help from both Spider-Men and proves he can still choose compassion over revenge."
+      },
+      "10": {
+        "media_type": "video",
+        "video_id": "h5ZqJlFXbSE",
+        "start": 341,
+        "end": 380,
+        "caption": "Peter realizes the multiverse is unraveling and agrees to let everyone forget who he is in order to save the world."
+      },
+      "11": {
+        "media_type": "image",
+        "media_url": "https://images.squarespace-cdn.com/content/v1/5a7dcf69d7bdce185884a6b5/1540231216567-LL2UJPGQBXP3AJZKKYLU/harry-potter-and-the-sorcerers-stone-page-12-of-12.jpg",
+        "caption": "Peter sacrifices his personal relationships to save the world. He visits MJ and Ned but chooses not to remind them of who he is, accepting the painful cost of his decision and stepping into a new life alone."
+      },
+      "12": {
+        "media_type": "image",
+        "media_url": "https://media1.giphy.com/media/hujejOtss7zG0/giphy.gif?cid=6c09b952w6tw4yd40z72417ez636pi95acm8vqc10ydhtoah&ep=v1_gifs_search&rid=giphy.gif&ct=g",
+        "caption": "Peter moves into a small apartment, makes a new suit, and fully embraces his role as Spider-Man with no help, no recognition, and no safety net."
+      }
+    }
+}
+  
