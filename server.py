@@ -1,5 +1,5 @@
 import os
-from flask import Flask, abort, json, redirect, render_template, session, url_for
+from flask import Flask, abort, json, redirect, render_template, request, session, url_for
 import json
 
 app = Flask(__name__)
@@ -81,8 +81,8 @@ def load_quiz_data():
     with open(path) as f:
         return json.load(f)
 
-@app.route("/")
-def home():
+@app.route("/quiz")
+def quiz():
     return "<h1>Hero's Journey</h1><p><a href='/quiz/1'>Start Quiz</a></p>"
 
 @app.route("/quiz/<int:stage_number>", methods=["GET", "POST"])
@@ -121,4 +121,4 @@ def quiz_result():
     return "<h2>🎉 Quiz complete! You've finished all the stages.</h2>"
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=True, port=5001)
