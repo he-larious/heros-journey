@@ -11,6 +11,9 @@ with open('data/stages.json') as f:
 with open('data/quiz.json') as f:
     quiz_data = json.load(f)
 
+stories = {}
+current_id = 0
+
 def load_movie_data(movie_key):
     """Load JSON data for a specific movie."""
     filepath = f'data/{movie_key}.json'
@@ -205,11 +208,29 @@ def view_stories():
     # For now, we'll just show a message
     return render_template('view_stories.html')
 
+@app.route('/create')
+def create():
+    return render_template('create.html', all_stage_data = all_stage_data)
+
+@app.route('/create/submit')
+def submit():
+    global current_id
+    data = request.get_json()
+    story = {
+        'name': data['name'],
+        'story': data['story']
+    }
+    stories[str(current_id)] = story
+    old = current_id
+    current_id += 1
+    return jsonify(id=old)
+
 # NOTE: Dev only path to reset progress tracking
 @app.route('/reset_progress')
 def reset_progress():
     session.pop('learn_progress', None)
     session.pop('quiz_progress', None)
+    session.pop('story_progress', None)
     return redirect(url_for('learn'))
 
 if __name__ == '__main__':
