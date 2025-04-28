@@ -11,8 +11,24 @@ with open('data/stages.json') as f:
 with open('data/quiz.json') as f:
     quiz_data = json.load(f)
 
-stories = {}
-current_id = 0
+stories = {
+    "1": {
+        "name": "I am a sample story!",
+        "stage_1": "In the quiet village of Alderbrook, 17-year-old Eli tends sheep, dreaming of distant lands beyond the misty mountains. His life is simple, filled with chores and the occasional festival, and he’s content—mostly.",
+        "stage_2": "One evening, a dying hawk crashes at Eli’s feet, a strange scroll clutched in its talons. The scroll speaks of a fading light at the heart of the world and a key hidden deep in the Shrouded Forest—the only thing that can save it.",
+        "stage_3": "Terrified, Eli dismisses the message. He's just a shepherd; adventurers are the ones who save worlds, not him. Besides, leaving means abandoning his sick mother.",
+        "stage_4": "That night, an old traveler named Maelen visits the village. He seems to know about the scroll and warns Eli that ignoring the call could doom not just Alderbrook, but life itself. Maelen gives Eli an ancient pendant, saying, 'When the time comes, this will show you the way.'",
+        "stage_5": "The next morning, Eli wakes to find the fields withering and the sky bruised. Driven by fear and a reluctant sense of duty, he leaves Alderbrook, clutching the pendant tightly.",
+        "stage_6": "In the wilds, Eli faces treacherous rivers, shadow beasts, and betrayal. He gains allies: Kaia, a thief with a haunted past, and Brin, a warrior seeking redemption. But enemies lurk too—especially the Pale King’s riders, who seek the same key for darker purposes.",
+        "stage_7": "Eli and his friends reach the Shrouded Forest’s heart: a labyrinth of living trees. They must navigate illusions, face their deepest fears, and trust each other completely to find the hidden chamber where the key rests.",
+        "stage_8": "Inside the final chamber, Eli confronts the Pale King himself, who offers him a choice: hand over the pendant in exchange for the cure to his mother’s illness—or fight and risk everything. Torn, Eli almost gives in—but Kaia’s trust and Brin’s loyalty remind him who he is. He refuses and fights, barely escaping with his life and the key.",
+        "stage_9": "With the key in hand, Eli unlocks a fountain of pure light that begins to heal the wounded land. His pendant melts into the key, revealing its true power: the ability to restore balance.",
+        "stage_10": "Eli and his friends race back toward Alderbrook, pursued by the Pale King's remnants. Along the way, the world begins to revive—the rivers run clean, the trees regrow, and hope stirs.",
+        "stage_11": "In a final confrontation at the village gates, Eli faces the Pale King one last time. Drawing on everything he’s learned—courage, sacrifice, love—he defeats the darkness, not by force, but by wielding the light to cleanse it.",
+        "stage_12": "Eli returns to Alderbrook not as the sheep-boy he once was, but as a guardian of the world’s balance. His mother recovers, the village flourishes, and Eli knows that though adventures may call again, he will be ready."
+    }
+}
+current_id = 1
 
 def load_movie_data(movie_key):
     """Load JSON data for a specific movie."""
@@ -33,7 +49,7 @@ def get_stage_names():
 
 @app.route('/')
 def home():
-    return render_template('home.html')
+    return render_template('home.html', stories=stories)
 
 @app.route('/learn')
 def learn():
@@ -202,28 +218,49 @@ def share_stories():
     return render_template('share_stories.html',
                          stories=stories_with_questions)
 
-@app.route('/quiz/stories')
-def view_stories():
-    # In a real application, this would fetch stories from a database
-    # For now, we'll just show a message
-    return render_template('view_stories.html')
+@app.route('/view/<int:current_id>')
+def story_urls(current_id):
+   story = stories.get(str(current_id))
+   print(stories)
+   return render_template('story.html', story=story, id=current_id, stories=stories, all_stage_data=all_stage_data)
 
 @app.route('/create')
 def create():
-    return render_template('create.html', all_stage_data = all_stage_data)
+    return render_template('create.html', all_stage_data=all_stage_data, stories=stories)
 
-@app.route('/create/submit')
+@app.route('/create/submit', methods=['POST'])
 def submit():
     global current_id
     data = request.get_json()
+    current_id += 1
     story = {
         'name': data['name'],
-        'story': data['story']
+        'stage_1': data['stage_1'],
+        'stage_2': data['stage_2'],
+        'stage_3': data['stage_3'],
+        'stage_4': data['stage_4'],
+        'stage_5': data['stage_5'],
+        'stage_6': data['stage_6'],
+        'stage_7': data['stage_7'],
+        'stage_8': data['stage_8'],
+        'stage_9': data['stage_9'],
+        'stage_10': data['stage_10'],
+        'stage_11': data['stage_11'],
+        'stage_12': data['stage_12']
     }
     stories[str(current_id)] = story
-    old = current_id
-    current_id += 1
-    return jsonify(id=old)
+    return jsonify(id=current_id)
+
+@app.route('/edit/<int:current_id>', methods=['GET', 'POST'])
+def edit(current_id):
+   if request.method == 'POST':
+      data = request.get_json()
+      stories[str(current_id)] = data
+      story = stories.get(str(current_id))
+      return render_template('create.html', story=story)
+   elif request.method == "GET":
+      item = stories.get(str(current_id))
+      return render_template('create.html', story=story)
 
 # NOTE: Dev only path to reset progress tracking
 @app.route('/reset_progress')

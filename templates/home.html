@@ -5,6 +5,11 @@
 {% endblock %}
 
 {% block content %}
+<script>
+    const stories = {{ stories | tojson }};
+</script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="{{ url_for('static', filename='js/create.js') }}"></script>
 <div class="home-container">
     <h1>Explore the Hero's Journey!</h1>
     <p>Discover the path every hero takes — from the ordinary world to legendary transformation.</p>
@@ -13,6 +18,11 @@
         <a class="btn" href="{{ url_for('learn') }}">Learn</a>
         <a class="btn" href="{{ url_for('quiz') }}">Quiz</a>
         <a class="btn" href="{{ url_for('create') }}">Create your own adventure!</a>
+    </div>
+    <br>
+    <div class="quiz-container">
+        <h1>See all stories here.</h1>
+        <div id="story_container" class="quiz-container"></div>
     </div>
 </div>
 {% endblock %}

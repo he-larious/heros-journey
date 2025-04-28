@@ -6,58 +6,43 @@
 {% endblock %}
 
 {% block content %}
-
+<script>
+    const all_stage_data = {{ all_stage_data | tojson }}
+    const stories = {{ stories | tojson }}
+</script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="{{ url_for('static', filename='js/create.js') }}"></script>
 <script>
     function toggleStage(num) {
         const body = document.getElementById('stage-body-' + num);
         body.style.display = (body.style.display === 'none' || body.style.display === '') ? 'block' : 'none';
     }
-    function submitStory() {
-        //to be implemented
-        form()
-        $.ajax({
-            type: "POST",
-            url: "/create/submit",
-            contentType: "application/json",
-            data: JSON.stringify(newStory),
-                success: function(response) {
-                    id = response.id;
-                    statusAppend(id);
-                },
-                error: function(request, status, error) {
-                    alert('We could not submit your story. Please try again!');
-                }
-        })
-    }
-    function form() {
-        // returns newStory
-        {% for stage_num, stage in all_stage_data.items() %}
-        //pull text input, if text input empty then throw an error message in the error div + prevent form submission
-        {% endfor %}
-
-    }
 </script>
-
 <div class="quiz-container">
+    <div id="successStatus"></div>
     <h1>Create your own adventure!</h1>
     <div class="quiz-intro">
         <p>In this section, you can create your own Hero's Journey!</p>
         <p>There are 12 sections covering various stages of the journey. Click each title to expand/hide each section!</p>
     </div>
-    {% for stage_num, stage in all_stage_data.items() %}
-    <div class="stage">
-        <h2 onclick="toggleStage({{ stage_num }})" style="cursor: pointer;">
-            {{ stage_num }}. {{ stage.name }}
-        </h2>
-        <div id="stage-body-{{ stage_num }}" style="display: none;">
-            <p>{{ stage.description }}</p>
-            <br><div id="{{ stage_num }}Error"></div>
-            <textarea class="story-input" name="stage_{{ stage_num }}" placeholder="Write your story..."></textarea>
-        </div>
-    </div>
-    {% endfor %}
-    <div class="start-button" onclick="submitStory()">Submit Story</div>
+    <form id="adventure">
+        <h2>Name your story.</h2>
+        <div id="name_error"></div>
+        <input class="textinput" type="text" id="name" name="name" style="overflow: hidden;" placeholder="Think of a name..."/>
+        {% for stage_num, stage in all_stage_data.items() %}
+            <div class="stage">
+            <h2 onclick="toggleStage({{ stage_num }})" style="cursor: pointer;">
+                {{ stage_num }}. {{ stage.name }}
+            </h2>
+            <div id="stage-body-{{ stage_num }}" style="display: none;">
+                <p>{{ stage.description }}</p>
+                <div id="{{ stage_num }}_error"></div>
+                <textarea class="story-input" id="stage_{{ stage_num }}" placeholder="Write your story..."></textarea>
+            </div>
+            </div>
+        {% endfor %}
+        <input type="submit" id="save" value="And go!"><span id="discard"></span>
+    </form>
 </div>
 
 {% endblock %}

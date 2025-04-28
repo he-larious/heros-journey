@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/quiz.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}">
+{% endblock %}
+
+{% block content %}
+<script>
+    const stories = {{ stories | tojson }};
+    const story = {{ story | tojson }};
+    const id = {{ id | tojson }};
+    const all_stage_data = {{ all_stage_data | tojson }}
+</script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="{{ url_for('static', filename='js/create.js') }}"></script>
+<script>
+    function toggleStage(num) {
+        const body = document.getElementById('stage-body-' + num);
+        body.style.display = (body.style.display === 'none' || body.style.display === '') ? 'block' : 'none';
+    }
+</script>
+<div class="quiz-container" id="storage"></div>
+
+{% endblock %}
