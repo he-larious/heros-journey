@@ -1,0 +1,259 @@
+{% extends "base.html" %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/quiz.css') }}">
+<style>
+    body {
+        background-color: var(--parchment-darker);
+        background-image: url("{{ url_for('static', filename='images/parchment-texture.png') }}");
+        background-repeat: repeat;
+    }
+    
+    .quiz-container {
+        border: 1px solid var(--border-gray);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    
+    .question-container h2 {
+        color: var(--parchment-text);
+        border-bottom: 2px solid var(--border-gray);
+        padding-bottom: 0.5rem;
+    }
+    
+    .option-button {
+        background: var(--white);
+        border: 1px solid var(--border-gray);
+        color: var(--text-gray);
+    }
+    
+    .option-button:hover:not(:disabled) {
+        background: var(--parchment-darker);
+        border-color: var(--text-gray);
+    }
+    
+    .feedback {
+        background: var(--white);
+        border: 1px solid var(--border-gray);
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="quiz-container">
+    <div class="quiz-progress">
+        <p>Question {{ question.id }} of {{ total_questions }}</p>
+        <div class="progress-bar">
+            <div class="progress" style="width: {{ (question.id / total_questions) * 100 }}%"></div>
+        </div>
+    </div>
+
+    <div class="question-container">
+        <h2>{{ question.stage }}</h2>
+        <p class="question">{{ question.question }}</p>
+
+        {% if question.type == 'multiple_choice' %}
+        <div class="options">
+            {% for option in question.options %}
+            <button class="option-button" data-answer="{{ loop.index0 }}">{{ option }}</button>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="matching-container">
+            <div class="terms-container">
+                {% for pair in question.pairs %}
+                <div class="term" draggable="true" data-term="{{ pair.term }}">{{ pair.term }}</div>
+                {% endfor %}
+            </div>
+            <div class="definitions-container">
+                {% for pair in question.pairs %}
+                <div class="definition-slot">
+                    <div class="definition">{{ pair.definition }}</div>
+                    <div class="drop-zone" data-definition="{{ pair.definition }}"></div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        <button class="check-matches-button" disabled>Check Matches</button>
+        {% endif %}
+    </div>
+
+    <div class="feedback hidden">
+        <div class="result-container">
+            <p class="result"></p>
+        </div>
+        <p class="explanation">{{ question.explanation }}</p>
+    </div>
+
+    <div class="navigation-buttons">
+        {% if question.id > 1 %}
+        <a href="{{ url_for('previous_hero_question') }}" class="prev-button">Previous</a>
+        {% else %}
+        <div></div>
+        {% endif %}
+        
+        {% if question.id < total_questions %}
+        <a href="{{ url_for('next_hero_question') }}" class="next-button hidden">Next</a>
+        {% else %}
+        <a href="{{ url_for('hero_quiz_results') }}" class="view-results-button hidden">View Results</a>
+        {% endif %}
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+$(document).ready(function() {
+    {% if question.type == 'multiple_choice' %}
+    // Multiple choice handling
+    $('.option-button').click(function() {
+        // Disable all buttons
+        $('.option-button').prop('disabled', true);
+        
+        const selectedAnswer = $(this).data('answer');
+        const questionNum = {{ question.id }};
+        
+        // Send answer to server
+        $.ajax({
+            url: '{{ url_for("submit_hero_answer") }}',
+            method: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify({
+                question_num: questionNum,
+                answer: selectedAnswer
+            }),
+            success: function(response) {
+                // Show feedback
+                $('.feedback').removeClass('hidden');
+                
+                if (response.correct) {
+                    $('.result').text('Correct!').addClass('correct');
+                    $(`.option-button[data-answer=${selectedAnswer}]`).addClass('correct');
+                } else {
+                    $('.result').text('Incorrect').addClass('incorrect');
+                    $(`.option-button[data-answer=${selectedAnswer}]`).addClass('incorrect');
+                    $(`.option-button[data-answer={{ question.correct_answer }}]`).addClass('correct');
+                }
+                
+                $('.explanation').text(response.explanation);
+                
+                // Show navigation buttons
+                {% if question.id < total_questions %}
+                $('.next-button').show();
+                {% else %}
+                $('.view-results-button').show();
+                {% endif %}
+            }
+        });
+    });
+    {% else %}
+    // Drag and drop handling
+    let draggedTerm = null;
+
+    $('.term').on('dragstart', function(e) {
+        draggedTerm = this;
+        e.originalEvent.dataTransfer.setData('text/plain', '');
+        $(this).addClass('dragging');
+    });
+
+    $('.term').on('dragend', function() {
+        $(this).removeClass('dragging');
+    });
+
+    $('.drop-zone').on('dragover', function(e) {
+        e.preventDefault();
+        $(this).addClass('drag-over');
+    });
+
+    $('.drop-zone').on('dragleave', function() {
+        $(this).removeClass('drag-over');
+    });
+
+    $('.drop-zone').on('drop', function(e) {
+        e.preventDefault();
+        $(this).removeClass('drag-over');
+        
+        if (draggedTerm) {
+            const term = $(draggedTerm);
+            const dropZone = $(this);
+            
+            // Remove any existing term in this drop zone
+            dropZone.find('.term').appendTo('.terms-container');
+            
+            // Move the dragged term to the drop zone
+            term.appendTo(dropZone);
+        }
+    });
+
+    // Check matches button handling
+    $('.check-matches-button').click(function() {
+        let allCorrect = true;
+        let matches = [];
+        
+        $('.drop-zone').each(function() {
+            const dropZone = $(this);
+            const correctTerm = dropZone.data('correct-term');
+            const placedTerm = dropZone.find('.term');
+            
+            if (placedTerm.length) {
+                const termValue = placedTerm.data('term');
+                const isCorrect = termValue === correctTerm;
+                matches.push({
+                    term: termValue,
+                    definition: dropZone.closest('.definition-slot').data('definition'),
+                    matched_correctly: isCorrect
+                });
+                
+                if (isCorrect) {
+                    dropZone.addClass('correct');
+                    placedTerm.addClass('correct');
+                } else {
+                    dropZone.addClass('incorrect');
+                    placedTerm.addClass('incorrect');
+                    allCorrect = false;
+                }
+            } else {
+                allCorrect = false;
+            }
+        });
+
+        // Send results to server
+        $.ajax({
+            url: '{{ url_for("submit_hero_answer") }}',
+            method: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify({
+                question_num: {{ question.id }},
+                answer: matches
+            }),
+            success: function(response) {
+                // Show feedback
+                $('.feedback').removeClass('hidden');
+                if (allCorrect) {
+                    $('.result').text('Correct! All matches are correct!').addClass('correct');
+                } else {
+                    const correctMatches = matches.filter(m => m.matched_correctly).length;
+                    $('.result').text(`You got ${correctMatches} out of {{ question.pairs|length }} matches correct.`).addClass('incorrect');
+                }
+                $('.explanation').text(response.explanation);
+
+                // Show navigation buttons
+                {% if question.id < total_questions %}
+                $('.next-button').show();
+                {% else %}
+                $('.view-results-button').show();
+                {% endif %}
+
+                // Disable further matching
+                $('.term').attr('draggable', false);
+                $(this).prop('disabled', true);
+            }.bind(this)
+        });
+    });
+    {% endif %}
+
+    // Handle next button click
+    $('.next-button').click(function() {
+        window.location.href = '{{ url_for("next_hero_question") }}';
+    });
+});
+</script>
+{% endblock %} 
