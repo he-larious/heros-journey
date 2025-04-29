@@ -6,24 +6,44 @@
 .movie-buttons {
     margin-top: 2rem;
     display: flex;
-    flex-direction: column;
+    flex-wrap: wrap;
     gap: 1rem;
-    align-items: center;
+    justify-content: center;
 }
 
 .movie-btn {
-    padding: 1rem 2rem;
-    background-color: #007bff;
-    color: white;
-    border: none;
+    /* make the link a flex‐box so icon + text sit side by side */
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+
+    /* give them equal width (or feel free to tweak) */
+    flex: 1 1 calc(33.333% - 1rem);
+    max-width: calc(33.333% - 1rem);
+
+    /* now left‐align the text */
+    text-align: left;
+    white-space: normal;
+
+    padding: 1rem 1.5rem;
+    background-color: var(--accent-color);
+    color: var(--dark-gray-color);
     text-decoration: none;
     font-weight: bold;
+    border: none;
     border-radius: 8px;
-    width: 280px;
-    text-align: center;
     transition: background-color 0.3s;
 }
 
 .movie-btn:hover {
-    background-color: #0056b3;
+    background-color: #8FB76B;
+    color: var(--dark-gray-color);
+}
+
+.movie-icon {
+    width: 80px;
+    height: 80px;
+
+    /* shove the icon flush left, then give text some breathing room */
+    margin-right: 1rem;
 }

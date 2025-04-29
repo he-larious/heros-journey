@@ -1,16 +1,25 @@
+:root {
+    --base-color: #FEF8E7;      
+    --accent-color: #A8C686;   
+    --dark-gray-color: #333333;
+    --light-gray-color: #ececec;
+}
+
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Merriweather', serif;
+    background-color: var(--base-color);
+    color: var(--dark-gray-color);
     margin: 0;
     padding: 0;
 }
 
 nav {
-    background-color: #333;
+    background-color: var(--accent-color);
     padding: 1rem;
 }
 
 .nav-container a {
-    color: white;
+    color: var(--dark-gray-color);
     margin-right: 1.5rem;
     text-decoration: none;
 }
@@ -22,12 +31,17 @@ nav {
 .btn {
     padding: 1rem 2rem;
     margin: 0 1rem;
-    background-color: #007bff;
-    color: white;
+    background-color: var(--accent-color);
+    color: var(--dark-gray-color);
     text-decoration: none;
     border-radius: 6px;
+    font-weight: bold;
+    transition: background-color 0.2s;
+    min-width: 50px;
+    text-align: center; 
+    display: inline-block;
 }
 
 .btn:hover {
-    background-color: #0056b3;
+    background-color: #8FB76B; /* Slightly darker version of the accent for hover */
 }

@@ -67,7 +67,7 @@ def learn_stage(movie_key, stage_num):
     if 'learn_progress' not in session:
         session['learn_progress'] = {}
 
-    session['learn_progress'][movie_key] = stage_num + 1
+    session['learn_progress'][movie_key] = max(stage_num + 1, session['learn_progress'][movie_key])
     session.modified = True
 
     stage = movie["stages"][str(stage_num)]

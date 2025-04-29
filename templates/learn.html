@@ -10,9 +10,18 @@
     <p>Pick a movie to begin.</p>
 
     <div class="movie-buttons">
-        <a href="{{ url_for('learn_diagram', movie_key='hunger_games') }}" class="movie-btn">The Hunger Games</a>
-        <a href="{{ url_for('learn_diagram', movie_key='harry_potter') }}" class="movie-btn">Harry Potter and the Sorcerer's Stone</a>
-        <a href="{{ url_for('learn_diagram', movie_key='spiderman_no_way_home') }}" class="movie-btn">Spider-Man: No Way Home</a>
+        <a href="{{ url_for('learn_diagram', movie_key='hunger_games') }}" class="movie-btn">
+            <img src="{{ url_for('static', filename='img/hunger-games-icon.png') }}" class="movie-icon">
+            The Hunger Games
+        </a>
+        <a href="{{ url_for('learn_diagram', movie_key='harry_potter') }}" class="movie-btn">
+            <img src="{{ url_for('static', filename='img/harry-potter-icon.png') }}" class="movie-icon">
+            Harry Potter and the Sorcerer's Stone
+        </a>
+        <a href="{{ url_for('learn_diagram', movie_key='spiderman_no_way_home') }}" class="movie-btn">
+            <img src="{{ url_for('static', filename='img/spider-man-icon.png') }}" class="movie-icon">
+            Spider-Man: No Way Home
+        </a>
     </div>
 </div>
 {% endblock %}
