@@ -1,0 +1,114 @@
+{% extends "base.html" %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/quiz.css') }}">
+<style>
+    body {
+        background-color: var(--parchment-darker);
+        background-image: url("{{ url_for('static', filename='images/parchment-texture.png') }}");
+        background-repeat: repeat;
+    }
+    
+    .quiz-container {
+        border: 1px solid var(--border-gray);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    
+    .results-summary {
+        background: var(--white);
+        border: 1px solid var(--border-gray);
+    }
+    
+    .results-summary h1 {
+        color: var(--parchment-text);
+        border-bottom: 2px solid var(--border-gray);
+        padding-bottom: 0.5rem;
+    }
+    
+    .question-review {
+        background: var(--white);
+        border: 1px solid var(--border-gray);
+    }
+    
+    .question-review h3 {
+        color: var(--parchment-text);
+    }
+    
+    .question-review p {
+        color: var(--text-gray);
+    }
+    
+    .multiple-choice-review,
+    .matching-review {
+        background: var(--white);
+        border: 1px solid var(--border-gray);
+    }
+    
+    .answer-feedback p {
+        color: var(--text-gray);
+    }
+    
+    .unanswered {
+        color: var(--text-gray);
+    }
+    
+    .match-pair {
+        border: 1px solid var(--border-gray);
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="quiz-container">
+    <div class="results-summary">
+        <h1>Your Hero's Journey</h1>
+        <h2>Final Score: {{ score }}%</h2>
+        <p class="feedback {% if score >= 80 %}excellent{% elif score >= 60 %}good{% else %}needs-improvement{% endif %}">
+            {% if score >= 80 %}
+            Excellent! You've mastered the Hero's Journey!
+            {% elif score >= 60 %}
+            Good job! You understand the key elements of the Hero's Journey.
+            {% else %}
+            Keep learning! The Hero's Journey is a complex pattern worth understanding.
+            {% endif %}
+        </p>
+    </div>
+
+    <div class="detailed-results">
+        {% for result in questions_with_results %}
+        <div class="question-review {% if result.user_answer == result.question.correct_answer %}correct{% else %}incorrect{% endif %}">
+            <h3>Question {{ result.question.id }}: {{ result.question.stage }}</h3>
+            <p class="question">{{ result.question.question }}</p>
+
+            {% if result.question.type == 'multiple_choice' %}
+            <div class="multiple-choice-review">
+                <div class="answer-feedback">
+                    <p>Your answer: 
+                        {% if result.user_answer is not none %}
+                            {{ result.question.options[result.user_answer] }}
+                        {% else %}
+                            <span class="unanswered">Unanswered</span>
+                        {% endif %}
+                    </p>
+                    <p>Correct answer: {{ result.question.options[result.question.correct_answer] }}</p>
+                </div>
+            </div>
+            {% else %}
+            <div class="matching-review">
+                {% for pair in result.question.pairs %}
+                <div class="match-pair {% if pair.matched_correctly %}correct{% else %}incorrect{% endif %}">
+                    <p>{{ pair.term }} - {{ pair.definition }}</p>
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+        </div>
+        {% endfor %}
+    </div>
+
+    <div class="action-buttons">
+        <a href="{{ url_for('quiz') }}" class="retry-button">Try Again</a>
+        <a href="{{ url_for('learn') }}" class="learn-more-button">Learn More</a>
+    </div>
+</div>
+{% endblock %} 
