@@ -14,7 +14,7 @@
     width: 360px;
     height: 360px;
     transform: translate(-50%, -50%);
-    border: 2px solid #555;
+    border: 2px solid var(--dark-gray-color);
     border-radius: 50%;
     z-index: 0;
 }
@@ -26,7 +26,7 @@
     transform: translateX(-50%);
     width: 88%;
     height: 2px;
-    background-color: #333;
+    background-color: var(--dark-gray-color);
     z-index: 0;
 }
 
@@ -51,21 +51,21 @@
 .circle-item {
     width: 50px;
     height: 50px;
-    background-color: #fff;
-    border: 2px solid #000;
+    background-color: var(--light-gray-color);
+    border: 2px solid var(--dark-gray-color);
     border-radius: 50%;
     text-align: center;
     line-height: 50px;
     font-weight: bold;
-    color: black;
+    color: var(--dark-gray-color);
     text-decoration: none;
     z-index: 2;
 }
 
 .circle-item.disabled {
-    background-color: #ddd;
-    color: #999;
-    border: 2px dashed #aaa;
+    background-color: #a9a9a9;
+    color: var(--dark-gray-color);
+    border: 2px dashed var(--dark-gray-color);
     cursor: not-allowed;
     pointer-events: none;
 }
@@ -84,9 +84,10 @@
 .stage-label {
     position: absolute;
     font-size: 0.75rem;
+    font-weight: bold;
     padding: 2px 6px;
-    background-color: #f0f0f0;
-    border: 1px solid #999;
+    background-color: var(--accent-color);
+    border: 2px solid var(--dark-gray-color);
     border-radius: 4px;
     white-space: nowrap;
     z-index: 2;
@@ -108,14 +109,14 @@
 
 /* Right side (Stages 3–7) */
 .label-3  { top: 9%; right: -10%; }
-.label-4  { top: 25%; right: -27%; }
-.label-5  { top: 47%; right: -39%; }
-.label-6  { top: 70%; right: -36%; }
-.label-7  { top: 87%; right: -23%; }
+.label-4  { top: 25%; right: -29%; }
+.label-5  { top: 47%; right: -40%; }
+.label-6  { top: 70%; right: -38%; }
+.label-7  { top: 87%; right: -26%; }
 
 /* Left side (Stages 9, 10, 11, 12, 1) */
 .label-9  { top: 87%; left: -3%; }
 .label-10 { top: 70%; left: -22%; }
 .label-11 { top: 47%; left: -25%; }
-.label-12 { top: 25%; left: -27%; }
-.label-1  { top: 9%; left: -10%; }
+.label-12 { top: 25%; left: -32%; }
+.label-1  { top: 9%; left: -13%; }
