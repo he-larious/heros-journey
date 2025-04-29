@@ -37,6 +37,7 @@
 
 .movie-btn:hover {
     background-color: #8FB76B;
+    color: var(--dark-gray-color);
 }
 
 .movie-icon {

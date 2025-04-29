@@ -1,40 +1,80 @@
 .stage-container {
+    display: flex;
+    justify-content: center;
+    padding: 3rem 1rem;
+    background-color: var(--base-color);
+}
+  
+.stage-card {
+    background-color: #fff;
+    padding: 2rem;
+    max-width: 800px;
+    width: 100%;
+    border-radius: 1rem;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
     text-align: center;
 }
-
-.stage-container h2 {
+  
+.stage-title {
     font-size: 2rem;
+    font-weight: bold;
     margin-bottom: 0.5rem;
 }
-
-.stage-container p {
-    font-size: 1rem;
-    line-height: 1.5;
-    margin: 1rem 0;
+  
+.stage-description {
+    font-size: 1.1rem;
+    color: var(--dark-gray-color);
+    margin-bottom: 1.5rem;
 }
-
+  
 .media {
-    margin: 2rem 0;
+    margin-bottom: 1.5rem;
 }
-
+  
+.responsive-video {
+    position: relative;
+    padding-bottom: 56.25%; /* 16:9 ratio */
+    height: 0;
+    overflow: hidden;
+    border-radius: 12px;
+}
+  
+.responsive-video iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
+}
+  
+.responsive-img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+  
 .caption {
     font-size: 1rem;
-    color: #444;
+    color: var(--dark-gray-color);
+    margin-top: 1rem;
     margin-bottom: 2rem;
+    text-align: justify;
 }
-
+  
 .back-to-diagram {
     display: inline-block;
-    margin-bottom: 1.5rem;
-    background-color: #ccc;
-    padding: 0.5rem 1rem;
-    border-radius: 6px;
+    background-color: var(--accent-color);
+    padding: 0.6rem 1.2rem;
+    border-radius: 8px;
     text-decoration: none;
-    color: #000;
+    color: var(--dark-gray-color);
     font-weight: bold;
-    transition: background-color 0.2s;
+    transition: background-color 0.2s ease;
 }
-
+  
 .back-to-diagram:hover {
-    background-color: #aaa;
-}
+    background-color: #8FB76B;
+    color: var(--dark-gray-color);
+}  
