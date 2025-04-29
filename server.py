@@ -91,133 +91,95 @@ def learn_diagram(movie_key):
 # Quiz routes
 @app.route('/quiz')
 def quiz():
-    # Reset quiz progress when starting new quiz
+    # Reset quiz progress when starting a new quiz
     session['quiz_progress'] = {
         'current_question': 1,
-        'correct_answers': 0,
         'answers': {},
-        'stories': {}  # Add stories tracking
+        'correct_answers': 0
     }
-    return render_template('quiz.html')
+    return redirect(url_for('hero_quiz'))
 
-@app.route('/quiz/<int:question_num>')
-def quiz_question(question_num):
+@app.route('/hero-quiz')
+def hero_quiz():
+    # Initialize quiz progress if not exists
     if 'quiz_progress' not in session:
-        return redirect(url_for('quiz'))
+        session['quiz_progress'] = {
+            'current_question': 1,
+            'answers': {},
+            'correct_answers': 0
+        }
     
-    if question_num < 1 or question_num > len(quiz_data['questions']):
-        abort(404)
+    question_num = session['quiz_progress']['current_question']
+    question = QUIZ_QUESTIONS[question_num - 1]
     
-    question = quiz_data['questions'][question_num - 1]
-    return render_template('quiz_question.html', 
+    return render_template('hero_quiz.html',
                          question=question,
-                         total_questions=len(quiz_data['questions']),
-                         progress=session['quiz_progress'])
+                         total_questions=len(QUIZ_QUESTIONS))
 
-@app.route('/quiz/submit', methods=['POST'])
-def submit_answer():
-    if 'quiz_progress' not in session:
-        return redirect(url_for('quiz'))
-    
+@app.route('/hero-quiz/submit', methods=['POST'])
+def submit_hero_answer():
     data = request.get_json()
-    question_num = data.get('question_num')
-    answer = data.get('answer')
+    question_num = data['question_num']
+    answer = data['answer']
     
-    if not question_num or answer is None:
-        abort(400)
+    question = QUIZ_QUESTIONS[question_num - 1]
     
-    question = quiz_data['questions'][question_num - 1]
-    is_correct = answer == question['correct_answer']
+    if question['type'] == 'multiple_choice':
+        is_correct = answer == question['correct_answer']
+        if is_correct:
+            session['quiz_progress']['correct_answers'] += 1
+    else:  # matching type
+        correct_pairs = len([1 for pair in answer if pair['matched_correctly']])
+        total_pairs = len(question['pairs'])
+        is_correct = correct_pairs == total_pairs
+        if is_correct:
+            session['quiz_progress']['correct_answers'] += 1
     
-    # Update session
-    if is_correct:
-        session['quiz_progress']['correct_answers'] += 1
-    session['quiz_progress']['answers'][str(question['id'])] = {
-        'selected': answer,
-        'correct': is_correct
-    }
-    session['quiz_progress']['current_question'] = question_num + 1
+    session['quiz_progress']['answers'][str(question_num)] = answer
     session.modified = True
     
     return jsonify({
         'correct': is_correct,
-        'explanation': question['explanation'],
-        'next_question': question_num + 1 if question_num < len(quiz_data['questions']) else None
+        'explanation': question['explanation']
     })
 
-@app.route('/quiz/save_story', methods=['POST'])
-def save_story():
-    if 'quiz_progress' not in session:
-        return redirect(url_for('quiz'))
-    
-    data = request.get_json()
-    question_num = data.get('question_num')
-    story = data.get('story')
-    
-    if not question_num or not story:
-        abort(400)
-    
-    # Initialize stories dict if it doesn't exist
-    if 'stories' not in session['quiz_progress']:
-        session['quiz_progress']['stories'] = {}
-    
-    # Save the story
-    session['quiz_progress']['stories'][str(question_num)] = story
+@app.route('/hero-quiz/next')
+def next_hero_question():
+    session['quiz_progress']['current_question'] += 1
     session.modified = True
     
-    return jsonify({'success': True})
+    if session['quiz_progress']['current_question'] > len(QUIZ_QUESTIONS):
+        return redirect(url_for('hero_quiz_results'))
+    
+    return redirect(url_for('hero_quiz'))
 
-@app.route('/quiz/results')
-def quiz_results():
+@app.route('/hero-quiz/previous')
+def previous_hero_question():
+    if session['quiz_progress']['current_question'] > 1:
+        session['quiz_progress']['current_question'] -= 1
+        session.modified = True
+    return redirect(url_for('hero_quiz'))
+
+@app.route('/hero-quiz/results')
+def hero_quiz_results():
     if 'quiz_progress' not in session:
-        return redirect(url_for('quiz'))
+        return redirect(url_for('hero_quiz'))
     
-    progress = session['quiz_progress']
-    total_questions = len(quiz_data['questions'])
-    score = (progress['correct_answers'] / total_questions) * 100
-    
-    # Get all questions and their corresponding answers and stories
+    score = (session['quiz_progress']['correct_answers'] / len(QUIZ_QUESTIONS)) * 100
     questions_with_results = []
-    for question in quiz_data['questions']:
-        q_id = str(question['id'])
-        answer_data = progress['answers'].get(q_id, {})
-        story = progress.get('stories', {}).get(q_id, '')
-        
+    
+    for question in QUIZ_QUESTIONS:
+        question_num = str(question['id'])
         questions_with_results.append({
             'question': question,
-            'answer': answer_data,
-            'story': story
+            'user_answer': session['quiz_progress']['answers'].get(question_num)
         })
     
-    return render_template('quiz_results.html',
+    return render_template('hero_quiz_results.html',
                          score=score,
-                         correct_answers=progress['correct_answers'],
-                         total_questions=total_questions,
-                         questions_with_results=questions_with_results)
-
-@app.route('/quiz/share')
-def share_stories():
-    if 'quiz_progress' not in session:
-        return redirect(url_for('quiz'))
+                         questions_with_results=questions_with_results,
+                         total_questions=len(QUIZ_QUESTIONS))
     
-    progress = session['quiz_progress']
-    stories = progress.get('stories', {})
-    questions = quiz_data['questions']
-    
-    # Combine stories with their corresponding questions
-    stories_with_questions = []
-    for q_id, story in stories.items():
-        question = next((q for q in questions if str(q['id']) == q_id), None)
-        if question:
-            stories_with_questions.append({
-                'stage': question['stage'],
-                'prompt': question['story_prompt'],
-                'story': story
-            })
-    
-    return render_template('share_stories.html',
-                         stories=stories_with_questions)
-
 @app.route('/view/<int:current_id>')
 def story_urls(current_id):
    story = stories.get(str(current_id))
