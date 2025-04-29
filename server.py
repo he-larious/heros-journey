@@ -110,11 +110,11 @@ def hero_quiz():
         }
     
     question_num = session['quiz_progress']['current_question']
-    question = QUIZ_QUESTIONS[question_num - 1]
+    question = quiz_questions[question_num - 1]
     
     return render_template('hero_quiz.html',
                          question=question,
-                         total_questions=len(QUIZ_QUESTIONS))
+                         total_questions=len(quiz_questions))
 
 @app.route('/hero-quiz/submit', methods=['POST'])
 def submit_hero_answer():
@@ -122,7 +122,7 @@ def submit_hero_answer():
     question_num = data['question_num']
     answer = data['answer']
     
-    question = QUIZ_QUESTIONS[question_num - 1]
+    question = quiz_questions[question_num - 1]
     
     if question['type'] == 'multiple_choice':
         is_correct = answer == question['correct_answer']
@@ -148,7 +148,7 @@ def next_hero_question():
     session['quiz_progress']['current_question'] += 1
     session.modified = True
     
-    if session['quiz_progress']['current_question'] > len(QUIZ_QUESTIONS):
+    if session['quiz_progress']['current_question'] > len(quiz_questions):
         return redirect(url_for('hero_quiz_results'))
     
     return redirect(url_for('hero_quiz'))
@@ -165,10 +165,10 @@ def hero_quiz_results():
     if 'quiz_progress' not in session:
         return redirect(url_for('hero_quiz'))
     
-    score = (session['quiz_progress']['correct_answers'] / len(QUIZ_QUESTIONS)) * 100
+    score = (session['quiz_progress']['correct_answers'] / len(quiz_questions)) * 100
     questions_with_results = []
     
-    for question in QUIZ_QUESTIONS:
+    for question in quiz_questions:
         question_num = str(question['id'])
         questions_with_results.append({
             'question': question,
@@ -178,7 +178,7 @@ def hero_quiz_results():
     return render_template('hero_quiz_results.html',
                          score=score,
                          questions_with_results=questions_with_results,
-                         total_questions=len(QUIZ_QUESTIONS))
+                         total_questions=len(quiz_questions))
     
 @app.route('/view/<int:current_id>')
 def story_urls(current_id):
