@@ -1,0 +1,110 @@
+[
+    {
+        "id": 1,
+        "stage": "The Ordinary World",
+        "type": "multiple_choice",
+        "question": "What is the purpose of the Ordinary World stage in the Hero's Journey?",
+        "options": [
+            "To show the hero's normal life before the adventure",
+            "To introduce the main villain",
+            "To show the hero's special powers",
+            "To reveal the final destination"
+        ],
+        "correct_answer": 0,
+        "explanation": "The Ordinary World stage establishes the hero's normal life and routine before the adventure begins, creating a contrast with the special world they will enter."
+    },
+    {
+        "id": 2,
+        "type": "matching",
+        "stage": "Key Elements",
+        "question": "Match each element with its correct description in the Hero's Journey:",
+        "pairs": [
+            {"term": "Mentor", "definition": "A wise figure who provides guidance and aid"},
+            {"term": "Threshold", "definition": "The boundary between the ordinary and special world"},
+            {"term": "Call to Adventure", "definition": "The event that disrupts the hero's normal life"},
+            {"term": "Allies", "definition": "Characters who help the hero along the journey"}
+        ],
+        "explanation": "Each element plays a crucial role in the hero's transformation and journey."
+    },
+    {
+        "id": 3,
+        "type": "multiple_choice",
+        "stage": "Refusal of the Call",
+        "question": "Why do heroes often refuse the call to adventure?",
+        "options": [
+            "They are afraid of change",
+            "They don't believe in their abilities",
+            "They have responsibilities they can't leave",
+            "All of the above"
+        ],
+        "correct_answer": 3,
+        "explanation": "Heroes often refuse the call due to fear, self-doubt, or practical concerns. This hesitation makes their eventual acceptance more meaningful."
+    },
+    {
+        "id": 4,
+        "type": "matching",
+        "stage": "Character Roles",
+        "question": "Match each character role with its function in the Hero's Journey:",
+        "pairs": [
+            {"term": "Herald", "definition": "Announces the need for change in the hero's life"},
+            {"term": "Trickster", "definition": "Provides comic relief and transformation"},
+            {"term": "Shadow", "definition": "Represents the hero's greatest fears and challenges"},
+            {"term": "Shapeshifter", "definition": "A character whose loyalty is uncertain"}
+        ],
+        "explanation": "Different character archetypes serve specific purposes in challenging and developing the hero."
+    },
+    {
+        "id": 5,
+        "type": "multiple_choice",
+        "stage": "Crossing the Threshold",
+        "question": "What does \"Crossing the Threshold\" symbolize?",
+        "options": [
+            "The point of no return",
+            "The first major challenge",
+            "The final battle",
+            "The hero's return home"
+        ],
+        "correct_answer": 0,
+        "explanation": "Crossing the Threshold represents the moment when the hero fully commits to the journey and cannot easily return to their ordinary world."
+    },
+    {
+        "id": 6,
+        "type": "matching",
+        "stage": "Journey Stages",
+        "question": "Match each stage with its place in the Hero's Journey:",
+        "pairs": [
+            {"term": "Approach", "definition": "Preparing for the major challenge ahead"},
+            {"term": "Ordeal", "definition": "The central crisis or challenge"},
+            {"term": "Reward", "definition": "The achievement of the goal"},
+            {"term": "Return", "definition": "Bringing back wisdom to share"}
+        ],
+        "explanation": "The Hero's Journey follows a specific sequence of stages, each serving a unique purpose."
+    },
+    {
+        "id": 7,
+        "type": "multiple_choice",
+        "stage": "The Ordeal",
+        "question": "What typically happens during the Ordeal?",
+        "options": [
+            "The hero faces their greatest fear",
+            "The hero meets new allies",
+            "The hero returns home",
+            "The hero starts their journey"
+        ],
+        "correct_answer": 0,
+        "explanation": "The Ordeal is where the hero faces their greatest challenge or fear, often experiencing a symbolic death and rebirth."
+    },
+    {
+        "id": 8,
+        "type": "matching",
+        "stage": "Story Elements",
+        "question": "Match each element with its symbolic meaning:",
+        "pairs": [
+            {"term": "Cave", "definition": "A place of challenge and self-discovery"},
+            {"term": "Magic Weapon", "definition": "Special tool or knowledge needed to succeed"},
+            {"term": "Road Back", "definition": "The journey to share what was learned"},
+            {"term": "Elixir", "definition": "The wisdom or power gained from the journey"}
+        ],
+        "explanation": "Symbolic elements in the Hero's Journey represent deeper meanings about personal growth and transformation."
+    }
+] 
