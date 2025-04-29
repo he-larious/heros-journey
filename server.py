@@ -8,8 +8,8 @@ app.secret_key = 'your-secret-key'
 with open('data/stages.json') as f:
     all_stage_data = json.load(f)
 
-with open('data/quiz.json') as f:
-    quiz_data = json.load(f)
+with open('data/quiz_questions.json', 'r') as f:
+    quiz_questions = json.load(f)
 
 stories = {
     "1": {
