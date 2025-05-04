@@ -13,3 +13,10 @@
     width: 80%;
     margin: 2rem auto;
 }
+
+.story-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+    margin-bottom: 30px;
+}

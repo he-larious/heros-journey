@@ -167,15 +167,15 @@ function populate() {
 }
 
 function seeStory() {
-    $("#storage").append(`<h2 class="text-center mb-4">${story.name}</h2>`);
+    $("#storage").append(`<h2 class="text-center mb-4">${story.name}</h2><br>`);
     for (let i = 1; i <= 12; i++) {
         stage_name = all_stage_data[i]["name"];
         stage_description = all_stage_data[i]["description"]
         $("#storage").append(`
             <div class="mb-3">
-                <h3>${stage_name}</h4>
-                <h4>${stage_description}</h3>
-                <p>${story[`stage_${i}`]}</p>
+                <h3>${stage_name}</h4><br>
+                <h4>${stage_description}</h3><br>
+                <p>${story[`stage_${i}`]}</p><br>
             </div>
         `);
     }
