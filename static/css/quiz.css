@@ -33,7 +33,7 @@
     max-width: 800px;
     margin: 3rem auto;
     padding: 2.5rem;
-    background: var(--parchment);
+    background: var(--baset-color);
     border-radius: 16px;
     box-shadow: var(--shadow-md);
     color: var(--parchment-text);
@@ -60,7 +60,7 @@
 
 .progress {
     height: 100%;
-    background: var(--primary-blue);
+    background: var(--accent-color);
     border-radius: 9999px;
     transition: width 0.5s ease;
 }
@@ -288,6 +288,7 @@
     justify-content: space-between;
     margin-top: 2.5rem;
     gap: 1rem;
+    background-color: var(--accent-color);
 }
 
 .prev-button,
@@ -301,6 +302,7 @@
     cursor: pointer;
     transition: var(--transition);
     text-decoration: none;
+    background-color: var(--baset-color);
 }
 
 .prev-button {
@@ -311,12 +313,14 @@
 .prev-button:hover {
     background-color: var(--medium-gray);
     color: var(--white);
+    background-color: var(--accent-color);
 }
 
 .next-button,
 .view-results-button {
     background-color: var(--primary-blue);
     color: var(--white);
+    background-color: var(--accent-color);
 }
 
 .next-button:hover,
@@ -324,6 +328,7 @@
     background-color: var(--primary-blue-hover);
     transform: translateY(-2px);
     box-shadow: var(--shadow-md);
+    background-color: var(--accent-color);
 }
 
 /* ==========================================================================
@@ -339,27 +344,27 @@
 }
 
 .results-summary h1 {
-    color: var(--parchment-text);
+    color: var(--baset-color);
     font-size: 2.25rem;
     margin-bottom: 1.5rem;
 }
 
 .results-summary h2 {
-    color: var(--text-gray);
+    color: var(--accent-color);
     font-size: 1.5rem;
     margin-bottom: 1rem;
 }
 
 .feedback.excellent {
-    color: var(--accent-green);
+    color: var(--accent-dark-gray);
 }
 
 .feedback.good {
-    color: var(--primary-blue);
+    color: var(--accent-dark-gray);
 }
 
 .feedback.needs-improvement {
-    color: var(--accent-red);
+    color: var(--accent-dark-gray);
 }
 
 .detailed-results {
@@ -383,11 +388,11 @@
 }
 
 .question-review.correct {
-    border-left: 4px solid var(--accent-green);
+    border-left: 4px solid var(--accent-color);
 }
 
 .question-review.incorrect {
-    border-left: 4px solid var(--accent-red);
+    border-left: 4px solid var(--accent-color);
 }
 
 .multiple-choice-review,
@@ -396,7 +401,7 @@
     padding: 1.5rem;
     background: var(--lighter-gray);
     border-radius: 8px;
-    border: 1px solid var(--border-gray);
+    border: 1px solid var(--border-color);
 }
 
 .answer-feedback {
@@ -425,7 +430,7 @@
 
 .match-pair.incorrect {
     background-color: rgba(239, 68, 68, 0.1);
-    color: var(--accent-red);
+    color: var(--accent-color);
 }
 
 /* ==========================================================================
@@ -456,49 +461,18 @@
 }
 
 .retry-button:hover {
-    background-color: var(--dark-gray);
+    background-color: var(--accent-color);
     transform: translateY(-2px);
     box-shadow: var(--shadow-md);
 }
 
 .learn-more-button {
-    background-color: var(--primary-blue);
+    background-color: var(--accent-color);
     color: var(--white);
 }
 
 .learn-more-button:hover {
-    background-color: var(--primary-blue-hover);
+    background-color: var(--accent-color);
     transform: translateY(-2px);
     box-shadow: var(--shadow-md);
 } 
-
-.story-input {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    margin-bottom: 10px;
-    box-sizing: border-box;
-}
-
-.btn {
-    padding: 12px 24px;
-    border-radius: 6px;
-    font-size: 16px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    border: none;
-    outline: none;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-}
-
-.button-container {
-    display: flex;
-    justify-content: center;
-    margin-top: 20px;
-    margin-bottom: 30px;
-}
