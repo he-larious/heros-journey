@@ -212,30 +212,27 @@
 }
 
 .check-matches-button {
-    display: block;
-    margin: 2rem auto;
-    padding: 1rem 2rem;
-    background-color: var(--primary-blue);
-    color: var(--white);
+    background-color: var(--accent-color);
+    color: white;
     border: none;
-    border-radius: 8px;
+    padding: 0.75em 1.5em;
+    border-radius: 6px;
     font-size: 1rem;
-    font-weight: 500;
     cursor: pointer;
-    transition: var(--transition);
+    transition: all 0.2s ease;
 }
 
-.check-matches-button:hover:not(:disabled) {
+/* Hover effect applies to all unless disabled overrides it */
+.check-matches-button:hover {
     background-color: var(--primary-blue-hover);
     transform: translateY(-2px);
     box-shadow: var(--shadow-md);
+    background-color: var(--accent-color);
+    color: var(--primary-blue);
 }
 
-.check-matches-button:disabled {
-    background-color: var(--medium-gray);
-    cursor: not-allowed;
-    opacity: 0.7;
-}
+/* Disabled state overrides all hover/active styles */
+
 
 /* ==========================================================================
    Feedback Components
@@ -306,16 +303,23 @@
 }
 
 .prev-button {
-    background-color: var(--light-gray);
-    color: var(--medium-gray);
-}
-
-.prev-button:hover {
-    background-color: var(--medium-gray);
-    color: var(--white);
     background-color: var(--accent-color);
+    color: white;
+    border: none;
+    padding: 0.75em 1.5em;
+    border-radius: 6px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
 }
 
+/* Make the hover style match "Check Matches" */
+.prev-button:hover {
+    background-color: var(--accent-color); /* or var(--primary-blue-hover) if you want a blue background on hover */
+    color: var(--primary-blue);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
 .next-button,
 .view-results-button {
     background-color: var(--primary-blue);
