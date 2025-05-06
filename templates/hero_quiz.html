@@ -68,12 +68,13 @@
                 {% for pair in question.pairs %}
                 <div class="definition-slot">
                     <div class="definition">{{ pair.definition }}</div>
-                    <div class="drop-zone" data-definition="{{ pair.definition }}"></div>
+                    <div class="drop-zone" data-definition="{{ pair.definition }}" data-correct-term="{{ pair.term }}"></div>
+
                 </div>
                 {% endfor %}
             </div>
         </div>
-        <button class="check-matches-button" disabled>Check Matches</button>
+        <button class="check-matches-button" >Check Matches</button>
         {% endif %}
     </div>
 

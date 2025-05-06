@@ -1,5 +1,5 @@
 import os
-from flask import Flask, abort, json, redirect, render_template, session, url_for, request, jsonify
+from flask import Flask, abort, json, redirect, render_template, session, url_for, request, jsonify, flash
 
 app = Flask(__name__)
 app.secret_key = 'your-secret-key'
@@ -103,20 +103,30 @@ def quiz():
 
 @app.route('/hero-quiz')
 def hero_quiz():
-    # Initialize quiz progress if not exists
     if 'quiz_progress' not in session:
         session['quiz_progress'] = {
             'current_question': 1,
-            'answers': {},
-            'correct_answers': 0
+            'correct_answers': 0,
+            'answers': {}
         }
+
+    current_index = session['quiz_progress']['current_question']
     
-    question_num = session['quiz_progress']['current_question']
-    question = quiz_questions[question_num - 1]
-    
-    return render_template('hero_quiz.html',
-                         question=question,
-                         total_questions=len(quiz_questions))
+    # Ensure index is within valid range
+    if current_index < 1:
+        current_index = 1
+    elif current_index > len(quiz_questions):
+        return redirect(url_for('hero_quiz_results'))
+
+    question = quiz_questions[current_index - 1]
+    total_questions = len(quiz_questions)
+
+    return render_template(
+        'hero_quiz.html',
+        question=question,
+        total_questions=total_questions
+    )
+
 
 @app.route('/hero-quiz/submit', methods=['POST'])
 def submit_hero_answer():
@@ -124,36 +134,58 @@ def submit_hero_answer():
     question_num = data['question_num']
     answer = data['answer']
     
+    # Confirm user is submitting for the current question
+    if question_num != session['quiz_progress']['current_question']:
+        return jsonify({
+            'error': 'Submitted question number does not match session progress.'
+        }), 400
+
     question = quiz_questions[question_num - 1]
-    
+
     if question['type'] == 'multiple_choice':
         is_correct = answer == question['correct_answer']
         if is_correct:
             session['quiz_progress']['correct_answers'] += 1
-    else:  # matching type
+    else:
         correct_pairs = len([1 for pair in answer if pair['matched_correctly']])
         total_pairs = len(question['pairs'])
         is_correct = correct_pairs == total_pairs
         if is_correct:
             session['quiz_progress']['correct_answers'] += 1
-    
+
     session['quiz_progress']['answers'][str(question_num)] = answer
     session.modified = True
-    
+
     return jsonify({
         'correct': is_correct,
         'explanation': question['explanation']
     })
 
+
+
+
+
+
 @app.route('/hero-quiz/next')
 def next_hero_question():
+    current = session['quiz_progress']['current_question']
+    
+    # Only allow moving forward if the current question has been answered
+    if str(current) not in session['quiz_progress']['answers']:
+        flash("Please answer the current question before moving on.")
+        return redirect(url_for('hero_quiz'))
+
     session['quiz_progress']['current_question'] += 1
     session.modified = True
-    
+
     if session['quiz_progress']['current_question'] > len(quiz_questions):
         return redirect(url_for('hero_quiz_results'))
-    
+
     return redirect(url_for('hero_quiz'))
+
+
+
+
 
 @app.route('/hero-quiz/previous')
 def previous_hero_question():
