@@ -16,17 +16,31 @@
 
     {
         "id": 2,
-        "type": "matching",
-        "stage": "Character Roles",
-        "question": "Match each character role with its function in the Hero's Journey:",
-        "pairs": [
-            {"term": "Herald", "definition": "Announces the need for change in the hero's life"},
-            {"term": "Trickster", "definition": "Provides comic relief and transformation"},
-            {"term": "Shadow", "definition": "Represents the hero's greatest fears and challenges"},
-            {"term": "Shapeshifter", "definition": "A character whose loyalty is uncertain"}
-        ],
-        "explanation": "Different character archetypes serve specific purposes in challenging and developing the hero."
+         "stage": "Tests and Trials",
+         "type": "matching",
+         "question": "Match each middle stage of the Hero’s Journey with its definition.",
+         "pairs": [
+    {
+      "term": "Crossing the Threshold",
+      "definition": "In which the Hero enters the other world in earnest."
     },
+    {
+      "term": "Tests, Allies, and Enemies",
+      "definition": "In which the Hero faces new challenges and gets a squad."
+    },
+    {
+      "term": "Approach to the Inmost Cave",
+      "definition": "In which the Hero prepares for their biggest challenge."
+    },
+    {
+      "term": "The Ordeal",
+      "definition": "In which the Hero faces their biggest test of all thus far."
+    }
+        ],
+        "explanation": "This part of the journey explores personal growth, risk, and relationships."
+    },
+
+     
 
     {
         "id": 3,
