@@ -218,7 +218,7 @@ def hero_quiz_results():
 def story_urls(current_id):
    story = stories.get(str(current_id))
    print(stories)
-   return render_template('story.html', story=story, id=current_id, stories=stories, all_stage_data=all_stage_data)
+   return render_template('story.html', story=story, all_stage_data=all_stage_data)
 
 @app.route('/create')
 def create():

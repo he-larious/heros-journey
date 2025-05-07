@@ -1,25 +1,44 @@
 {% extends "base.html" %}
 
 {% block extra_css %}
-<link rel="stylesheet" href="{{ url_for('static', filename='css/quiz.css') }}">
-<link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/diagram.css') }}">
 {% endblock %}
 
 {% block content %}
 <script>
-    const stories = {{ stories | tojson }};
     const story = {{ story | tojson }};
-    const id = {{ id | tojson }};
-    const all_stage_data = {{ all_stage_data | tojson }}
+    const all_stage_data = {{ all_stage_data | tojson }};
 </script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="{{ url_for('static', filename='js/create.js') }}"></script>
+
+<div class="circle-container">
+    <div class="circle-outline"></div>
+
+    {% for i in range(1, 13) %}
+        <div class="stage-wrapper" style="--i: {{ i }};">
+            <div class="circle-item clickable" onclick="showStage({{ i }})">{{ i }}</div>
+        </div>
+        <div class="stage-label label-{{ i }}">{{ all_stage_data[i|string]["name"] }}</div>
+    {% endfor %}
+
+    <div id="center-display" class="center-display">
+        <div class="center-placeholder">
+            <h3>Click a Stage Number to View the Story</h3>
+        </div>
+    </div>
+</div>
+
 <script>
-    function toggleStage(num) {
-        const body = document.getElementById('stage-body-' + num);
-        body.style.display = (body.style.display === 'none' || body.style.display === '') ? 'block' : 'none';
+    function showStage(stageNum) {
+        const stageText = story[`stage_${stageNum}`];
+        const stageTitle = all_stage_data[stageNum]["name"];
+        const stageDesc = all_stage_data[stageNum]["description"];
+
+        $('#center-display').html(`
+            <h3><b>${stageTitle}</b></h3>
+            <p><em>${stageDesc}</em></p>
+            <p>${stageText}</p>
+        `);
     }
 </script>
-<div class="quiz-container" id="storage"></div>
-
 {% endblock %}

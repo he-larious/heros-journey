@@ -139,3 +139,46 @@
 .label-11 { top: 47%; left: -22%; }
 .label-12 { top: 24.5%; left: -27%; }
 .label-1  { top: 8%; left: -8%; }
+
+.center-display {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 60%;
+    height: 60%;
+    overflow-y: auto;
+    transform: translate(-50%, -50%);
+    padding: 1rem;
+    text-align: left;
+}
+
+.center-placeholder {
+    display: flex;
+    align-items: center; 
+    justify-content: center;  
+    text-align: center;
+    height: 100%;
+}
+
+.center-display h3 {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+    text-align: center;
+    color: var(--dark-gray-color);
+}
+
+.center-display p {
+    font-size: 1rem;
+    line-height: 1.6;
+    margin-bottom: 1rem;
+    color: #444;
+}
+
+.center-display p em {
+    display: block;
+    font-size: 0.9rem;
+    font-style: italic;
+    color: #666;
+    margin-bottom: 1rem;
+    text-align: center;
+}
