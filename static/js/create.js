@@ -153,14 +153,17 @@ function clearForm() {
 
 function populate() {
     $("#story_container").empty();
-    Object.keys(stories).forEach(id => {
-        let story = stories[id];  
-        let storied = $(`
-            <div>
-                <a href="/view/${id}" class="d-block">${story.name}</a>
+    Object.entries(stories).forEach(([id, story]) => {
+        const storyCard = $(`
+            <div class="story-card">
+                <h3>${story.name}</h3>
+                <p>${story.stage_1.slice(0, 100)}...</p>
+                <div class="story-buttons">
+                    <a href="/view/${id}" class="btn-small">View</a>
+                </div>
             </div>
         `);
-        storied.prependTo("#story_container");
+        $("#story_container").append(storyCard);
     });
 }
 

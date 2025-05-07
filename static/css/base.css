@@ -18,9 +18,14 @@ nav {
     padding: 1rem;
 }
 
+.nav-container {
+    display: flex;
+    gap: 2rem; /* adjust this value as needed */
+    align-items: center;
+}
+
 .nav-container a {
     color: var(--dark-gray-color);
-    margin-right: 1.5rem;
     text-decoration: none;
 }
 
