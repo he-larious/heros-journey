@@ -156,10 +156,8 @@ function populate() {
     Object.keys(stories).forEach(id => {
         let story = stories[id];  
         let storied = $(`
-            <div class="col-md-4 text-center">
-                <div class="mt-2">
-                    <a href="/view/${id}" class="d-block">${story.name}</a>
-                </div>
+            <div>
+                <a href="/view/${id}" class="d-block">${story.name}</a>
             </div>
         `);
         storied.prependTo("#story_container");
