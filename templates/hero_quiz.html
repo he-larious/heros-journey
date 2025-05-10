@@ -4,7 +4,7 @@
 <link rel="stylesheet" href="{{ url_for('static', filename='css/quiz.css') }}">
 <style>
     body {
-        background-color: var(--parchment-darker);
+        background-color: var(--base-color);
         background-image: url("{{ url_for('static', filename='images/parchment-texture.png') }}");
         background-repeat: repeat;
     }
@@ -27,7 +27,7 @@
     }
     
     .option-button:hover:not(:disabled) {
-        background: var(--parchment-darker);
+        background: var(--accent-color);
         border-color: var(--text-gray);
     }
     

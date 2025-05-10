@@ -4,7 +4,7 @@
 <link rel="stylesheet" href="{{ url_for('static', filename='css/quiz.css') }}">
 <style>
     body {
-        background-color: var(--parchment-darker);
+        background-color: var(--base-color);
         background-image: url("{{ url_for('static', filename='images/parchment-texture.png') }}");
         background-repeat: repeat;
     }
@@ -16,18 +16,18 @@
     
     .results-summary {
         background: var(--white);
-        border: 1px solid var(--border-gray);
+        border: 1px solid var(--accent-color);
     }
     
     .results-summary h1 {
-        color: var(--parchment-text);
+        color: var(--accent-color);
         border-bottom: 2px solid var(--border-gray);
         padding-bottom: 0.5rem;
     }
     
     .question-review {
         background: var(--white);
-        border: 1px solid var(--border-gray);
+        border: 1px solid var(--accent-color);
     }
     
     .question-review h3 {

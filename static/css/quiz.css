@@ -33,7 +33,7 @@
     max-width: 800px;
     margin: 3rem auto;
     padding: 2.5rem;
-    background: var(--baset-color);
+    background-color: #fff; 
     border-radius: 16px;
     box-shadow: var(--shadow-md);
     color: var(--parchment-text);
@@ -161,7 +161,7 @@
 }
 
 .term:hover {
-    background-color: var(--light-gray);
+    background-color: var(--accent-color);
     transform: translateY(-2px);
     box-shadow: var(--shadow-sm);
 }
@@ -403,9 +403,9 @@
 .matching-review {
     margin: 1.5rem 0;
     padding: 1.5rem;
-    background: var(--lighter-gray);
+    background: var(--accent-color);
     border-radius: 8px;
-    border: 1px solid var(--border-color);
+    border: 1px solid var(--light-gray);
 }
 
 .answer-feedback {
@@ -512,3 +512,4 @@
     margin-top: 20px;
     margin-bottom: 30px;
 }
+
