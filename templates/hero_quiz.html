@@ -60,17 +60,16 @@
         {% else %}
         <div class="matching-container">
             <div class="terms-container">
-                {% for pair in question.pairs %}
-                <div class="term" draggable="true" data-term="{{ pair.term }}">{{ pair.term }}</div>
+                {% for term in question.terms %}
+                    <div class="term" draggable="true" data-term="{{ term.term }}">{{ term.term }}</div>
                 {% endfor %}
             </div>
             <div class="definitions-container">
-                {% for pair in question.pairs %}
-                <div class="definition-slot">
-                    <div class="definition">{{ pair.definition }}</div>
-                    <div class="drop-zone" data-definition="{{ pair.definition }}" data-correct-term="{{ pair.term }}"></div>
-
-                </div>
+                {% for defn in question.definitions %}
+                    <div class="definition-slot">
+                        <div class="definition">{{ defn.definition }}</div>
+                        <div class="drop-zone" data-definition="{{ defn.definition }}" data-correct-term="{{ defn.correct_term }}"></div>
+                    </div>
                 {% endfor %}
             </div>
         </div>

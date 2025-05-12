@@ -134,10 +134,18 @@ def hero_quiz():
         question['options'] = [opt for _, opt in zipped]
         question['shuffled_indices'] = {i: original_i for i, (original_i, _) in enumerate(zipped)}
         question['correct_answer'] = [i for i, idx in question['shuffled_indices'].items() if idx == correct][0]
-
     # Shuffle matching pairs
     elif question['type'] == 'matching':
-        random.shuffle(question['pairs'])
+        # Shuffle terms and definitions separately for drag-and-drop matching
+        terms = [{'term': pair['term']} for pair in question['pairs']]
+        definitions = [{'definition': pair['definition'], 'correct_term': pair['term']} for pair in question['pairs']]
+
+        random.shuffle(terms)
+        random.shuffle(definitions)
+
+        question['terms'] = terms
+        question['definitions'] = definitions
+
     
     total_questions = len(quiz_questions)
 
