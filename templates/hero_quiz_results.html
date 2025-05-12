@@ -76,16 +76,23 @@
 
     <div class="detailed-results">
         {% for result in questions_with_results %}
-        <div class="question-review {% if result.user_answer == result.question.correct_answer %}correct{% else %}incorrect{% endif %}">
-            <h3>Question {{ result.question.id }}: {{ result.question.stage }}</h3>
+        <div class="question-review {% if result.is_correct %}correct{% else %}incorrect{% endif %}">
+            <h3>
+                Question {{ result.question.id }}: {{ result.question.stage }}
+                {% if result.is_correct %}
+                    <span class="result-badge correct">✅ Correct</span>
+                {% else %}
+                    <span class="result-badge incorrect">❌ Incorrect</span>
+                {% endif %}
+            </h3>
             <p class="question">{{ result.question.question }}</p>
 
             {% if result.question.type == 'multiple_choice' %}
             <div class="multiple-choice-review">
                 <div class="answer-feedback">
                     <p>Your answer: 
-                        {% if result.user_answer is not none %}
-                            {{ result.question.options[result.user_answer] }}
+                        {% if result.user_answer %}
+                            {{ result.user_answer }}
                         {% else %}
                             <span class="unanswered">Unanswered</span>
                         {% endif %}

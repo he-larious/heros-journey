@@ -1,4 +1,6 @@
+import copy
 import os
+import random
 from flask import Flask, abort, json, redirect, render_template, session, url_for, request, jsonify, flash
 
 app = Flask(__name__)
@@ -118,7 +120,25 @@ def hero_quiz():
     elif current_index > len(quiz_questions):
         return redirect(url_for('hero_quiz_results'))
 
-    question = quiz_questions[current_index - 1]
+    # question = quiz_questions[current_index - 1]
+
+    original_question = quiz_questions[current_index - 1]
+    question = copy.deepcopy(original_question)  # prevent modifying the original
+
+     # Shuffle multiple choice options
+    if question['type'] == 'multiple_choice':
+        options = question['options']
+        correct = question['correct_answer']
+        zipped = list(enumerate(options))
+        random.shuffle(zipped)
+        question['options'] = [opt for _, opt in zipped]
+        question['shuffled_indices'] = {i: original_i for i, (original_i, _) in enumerate(zipped)}
+        question['correct_answer'] = [i for i, idx in question['shuffled_indices'].items() if idx == correct][0]
+
+    # Shuffle matching pairs
+    elif question['type'] == 'matching':
+        random.shuffle(question['pairs'])
+    
     total_questions = len(quiz_questions)
 
     return render_template(
@@ -133,7 +153,7 @@ def submit_hero_answer():
     data = request.get_json()
     question_num = data['question_num']
     answer = data['answer']
-    
+
     # Confirm user is submitting for the current question
     if question_num != session['quiz_progress']['current_question']:
         return jsonify({
@@ -141,9 +161,12 @@ def submit_hero_answer():
         }), 400
 
     question = quiz_questions[question_num - 1]
+    is_correct = False
+    correct_answer_text = None  # Initialize to avoid undefined errors
 
     if question['type'] == 'multiple_choice':
-        is_correct = answer == question['correct_answer']
+        correct_answer_text = question['options'][question['correct_answer']]
+        is_correct = answer == correct_answer_text
         if is_correct:
             session['quiz_progress']['correct_answers'] += 1
     else:
@@ -156,10 +179,16 @@ def submit_hero_answer():
     session['quiz_progress']['answers'][str(question_num)] = answer
     session.modified = True
 
-    return jsonify({
+    response = {
         'correct': is_correct,
         'explanation': question['explanation']
-    })
+    }
+
+    if correct_answer_text is not None:
+        response['correct_answer'] = correct_answer_text
+
+    return jsonify(response)
+
 
 
 
@@ -177,6 +206,7 @@ def next_hero_question():
 
     session['quiz_progress']['current_question'] += 1
     session.modified = True
+    print(session['quiz_progress']['current_question'])
 
     if session['quiz_progress']['current_question'] > len(quiz_questions):
         return redirect(url_for('hero_quiz_results'))
@@ -198,21 +228,59 @@ def previous_hero_question():
 def hero_quiz_results():
     if 'quiz_progress' not in session:
         return redirect(url_for('hero_quiz'))
-    
+
     score = (session['quiz_progress']['correct_answers'] / len(quiz_questions)) * 100
     questions_with_results = []
-    
+
     for question in quiz_questions:
-        question_num = str(question['id'])
-        questions_with_results.append({
+        question_id = str(question['id'])
+        user_answer = session['quiz_progress']['answers'].get(question_id)
+
+        result = {
             'question': question,
-            'user_answer': session['quiz_progress']['answers'].get(question_num)
-        })
-    
+            'user_answer': user_answer,
+            'is_correct': False
+        }
+
+        if question['type'] == 'multiple_choice':
+            if user_answer and user_answer == question['options'][question['correct_answer']]:
+                result['is_correct'] = True
+        else:
+            # For matching, we expect user_answer to be a list of dicts with matched_correctly
+            matched_correctly_count = 0
+            total_pairs = len(question['pairs'])
+            user_pairs = user_answer if isinstance(user_answer, list) else []
+
+            # Build a new list of pairs with correctness included
+            marked_pairs = []
+            matched_correctly_count = 0
+            total_pairs = len(question['pairs'])
+
+            for pair in question['pairs']:
+                match = next((p for p in user_pairs if p['term'] == pair['term']), None)
+                is_correct = match.get('matched_correctly', False) if match else False
+                marked_pairs.append({
+                    'term': pair['term'],
+                    'definition': pair['definition'],
+                    'matched_correctly': is_correct
+                })
+                if is_correct:
+                    matched_correctly_count += 1
+
+            # Replace original pairs with marked ones
+            question_with_marked = question.copy()
+            question_with_marked['pairs'] = marked_pairs
+            result['question'] = question_with_marked
+
+            result['is_correct'] = matched_correctly_count == total_pairs
+
+        questions_with_results.append(result)
+
     return render_template('hero_quiz_results.html',
-                         score=score,
-                         questions_with_results=questions_with_results,
-                         total_questions=len(quiz_questions))
+                           score=score,
+                           questions_with_results=questions_with_results,
+                           total_questions=len(quiz_questions))
+
     
 @app.route('/view/<int:current_id>')
 def story_urls(current_id):

@@ -109,7 +109,7 @@ $(document).ready(function() {
         // Disable all buttons
         $('.option-button').prop('disabled', true);
         
-        const selectedAnswer = $(this).data('answer');
+        const selectedAnswer = $(this).text();
         const questionNum = {{ question.id }};
         
         // Send answer to server
@@ -127,12 +127,30 @@ $(document).ready(function() {
                 
                 if (response.correct) {
                     $('.result').text('Correct!').addClass('correct');
-                    $(`.option-button[data-answer=${selectedAnswer}]`).addClass('correct');
-                } else {
+                    $('.option-button').each(function() {
+                        if ($(this).text().trim() === selectedAnswer) {
+                            $(this).addClass('correct');
+                        }
+                    });
+                } 
+                else {
                     $('.result').text('Incorrect').addClass('incorrect');
-                    $(`.option-button[data-answer=${selectedAnswer}]`).addClass('incorrect');
-                    $(`.option-button[data-answer={{ question.correct_answer }}]`).addClass('correct');
+                    
+                    // Mark selected as incorrect
+                    $('.option-button').each(function() {
+                        if ($(this).text().trim() === selectedAnswer) {
+                            $(this).addClass('incorrect');
+                        }
+                    });
+
+                    // Mark the correct answer
+                    $('.option-button').each(function() {
+                        if ($(this).text().trim() === response.correct_answer) {
+                            $(this).addClass('correct');
+                        }
+                    });
                 }
+
                 
                 $('.explanation').text(response.explanation);
                 
