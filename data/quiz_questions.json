@@ -18,26 +18,26 @@
         "id": 2,
          "stage": "Tests and Trials",
          "type": "matching",
-         "question": "Match each middle stage of the Hero's Journey with its definition.",
+         "question": "Match each moment from the Hero's Journey with the kind of scene you might see in a movie.",
          "pairs": [
     {
       "term": "Crossing the Threshold",
-      "definition": "In which the Hero enters the other world in earnest."
+      "definition": "The Hero steps through the portal, climbs aboard the ship, or sets foot in enemy territory - the point of no return."
     },
     {
       "term": "Tests, Allies, and Enemies",
-      "definition": "In which the Hero faces new challenges and gets a squad."
+      "definition": "Training montage! Plus awkward bonding with new allies and run-ins with a shady rival."
     },
     {
       "term": "Approach to the Inmost Cave",
-      "definition": "In which the Hero prepares for their biggest challenge."
+      "definition": "Tense music plays as the Hero sneaks into the enemy base or prepares for a heist."
     },
     {
       "term": "The Ordeal",
-      "definition": "In which the Hero faces their biggest test of all thus far."
+      "definition": "The Hero nearly dies (or watches someone else suffer) as everything hangs in the balance."
     }
         ],
-        "explanation": "This part of the journey explores personal growth, risk, and relationships."
+        "explanation": "This matching exercise connects narrative beats to common cinematic moments so learners can recognize them in any story."
     },
 
      
